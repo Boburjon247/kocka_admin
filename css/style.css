@@ -1,0 +1,1016 @@
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fff;
+  /* Scrollbar trekining fon rangi */
+  border-radius: 5px;
+  /* Scrollbar trekining burchak radiusi */
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(39, 169, 225, 0.5019607843);
+  /* Scrollbar thumbning rangi */
+  border-radius: 10px;
+  /* Scrollbar thumbning burchak radiusi */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  /* Hover qilinganida scrollbar thumbning rangi */
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "SUSE", sans-serif;
+}
+
+ul {
+  padding: 0 !important;
+  margin: 0;
+}
+ul li {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+p {
+  padding: 0;
+  margin: 0 !important;
+}
+
+.hide {
+  display: none !important;
+}
+
+.containerLogin {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #020817;
+}
+.containerLogin .login {
+  background-color: #111827;
+  width: 500px;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.containerLogin .login .loginTitle_top {
+  text-align: center;
+  color: orange;
+  font-size: 25px;
+  letter-spacing: 2px;
+}
+.containerLogin .login .loginImg {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+.containerLogin .login .loginImg img {
+  width: 100%;
+}
+.containerLogin .login form {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.containerLogin .login form .form-group {
+  width: 100%;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+.containerLogin .login form .form-group label {
+  color: rgba(255, 255, 255, 0.6117647059);
+  margin-bottom: 3px;
+}
+.containerLogin .login form .form-group span {
+  color: red;
+}
+.containerLogin .login form .form-group input {
+  width: 100%;
+  padding: 8px 15px;
+  outline: none;
+  background-color: #1e3865;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 5px;
+}
+.containerLogin .login form .form-group button {
+  background-color: #1e3865;
+  color: orange;
+  padding: 8px 25px;
+  margin-top: 25px;
+  border: none;
+  font-size: 20px;
+  border-radius: 5px;
+  box-shadow: inset 3px 3px 10px #315086, inset -3px -3px 10px #030508;
+}
+.containerLogin .login form .form-group-btn {
+  display: flex;
+  align-items: end;
+}
+.containerLogin .login form .error-login {
+  color: red;
+}
+
+.container-home {
+  background-color: #020817;
+  height: 100vh;
+  overflow: hidden;
+}
+.container-home .container-home-row {
+  padding: 0;
+}
+.container-home .container-home-row .container-home-row-colLeft {
+  padding: 0;
+  background-color: #111827;
+  height: 100vh;
+}
+.container-home .container-home-row .container-home-row-colLeft .home-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: orange;
+  font-size: 24px;
+  padding: 15px 0;
+  border-bottom: 1px solid #939393;
+  gap: 20px;
+}
+.container-home .container-home-row .container-home-row-colLeft .home-logo img {
+  width: 40px;
+  height: 40px;
+}
+.container-home .container-home-row .container-home-row-colLeft .home-main ul {
+  padding-top: 20px !important;
+}
+.container-home .container-home-row .container-home-row-colLeft .home-main ul li {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+  padding: 8px 15px;
+  cursor: pointer;
+  border-bottom: 1px solid;
+  transition: 0.5s;
+}
+.container-home .container-home-row .container-home-row-colLeft .home-main ul li i {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9e9e9e;
+  font-size: 18px;
+}
+.container-home .container-home-row .container-home-row-colLeft .home-main ul li span {
+  color: #cecccc;
+  font-size: 16px;
+}
+.container-home .container-home-row .container-home-row-colRight {
+  padding: 0 !important;
+}
+.container-home .container-home-row .container-home-row-colRight .main-right-blok-top {
+  padding: 10px;
+  background-color: #111827;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.container-home .container-home-row .container-home-row-colRight .main-right-blok-top button {
+  width: 35px;
+  height: 35px;
+  background-color: #1a2d50;
+  border: none;
+  border-radius: 5px;
+}
+.container-home .container-home-row .container-home-row-colRight .main-right-blok-top button i {
+  color: #fff;
+}
+.container-home .container-home-row .container-home-row-colRight .main-right-blok-top .user_name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #fff;
+}
+.container-home .container-home-row .container-home-row-colRight .main-right-blok-top .user_name i {
+  border-radius: 50%;
+  border: 1px solid #fff;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.container-home .container-home-row .container-home-row-colRight .main-right-blok .home-mine-blok-item {
+  background-color: #111827;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  display: none;
+}
+.container-home .container-home-row .container-home-row-colRight .main-right-blok .home-mine-blok-item.active {
+  display: block;
+}
+
+.container-home .container-home-row .container-home-row-colLeft .home-main ul li:hover,
+.container-home .container-home-row .container-home-row-colLeft .home-main ul li.active {
+  background-color: #1a2d50;
+  color: orange;
+  transition: 0.5s;
+}
+
+.home-mine-blok-item {
+  height: 89vh;
+}
+.home-mine-blok-item .loading {
+  width: 100%;
+  height: 100%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.home-mine-blok-item .loading .spinner-border {
+  color: orange;
+}
+
+.home-mine-blok-item .loading.active {
+  display: flex !important;
+}
+
+.home-mine-blok-item .main {
+  position: relative;
+}
+.home-mine-blok-item .main .topTitle {
+  color: #fff;
+  font-size: 20px;
+}
+.home-mine-blok-item .main .topTitle span {
+  color: #999;
+}
+.home-mine-blok-item .main .main_box_items .main-techers-students {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  padding: 15px 0;
+}
+.home-mine-blok-item .main .main_box_items .main-techers-students .items_box {
+  background-color: #1a2d50;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px 0;
+}
+.home-mine-blok-item .main .main_box_items .main-techers-students .items_box p {
+  font-size: 25px;
+  color: #eee;
+}
+.home-mine-blok-item .main .main_box_items .main-techers-students .items_box i {
+  font-size: 30px;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: orange;
+  background-color: #0d1c3d;
+  box-shadow: inset -3px -3px 5px #152955, inset 3px 3px 5px #102c6a;
+}
+.home-mine-blok-item .main .main_box_items .main-about {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 15px;
+}
+.home-mine-blok-item .main .main_box_items .main-about .main-about-items {
+  background-color: #1a2d50;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 20px;
+  padding-left: 30px;
+  height: 120px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.home-mine-blok-item .main .main_box_items .main-about .main-about-items ::after {
+  position: absolute;
+  right: -100px;
+  top: 0;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  content: "";
+  background-color: rgba(47, 95, 184, 0.9764705882);
+  transition: 0.3s;
+}
+.home-mine-blok-item .main .main_box_items .main-about .main-about-items:hover ::after {
+  box-shadow: 0px 0px 15px #fff;
+  transition: 0.3s;
+}
+.home-mine-blok-item .main .main_box_items .main-about .main-about-items i {
+  color: orange;
+  font-size: 40px;
+}
+.home-mine-blok-item .main .main_box_items .main-about .main-about-items span {
+  color: #eee;
+  font-size: 18px;
+}
+
+.newYers-yaratish {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.newYers-yaratish button {
+  padding: 8px 12px;
+  background-color: #3c8dbc;
+  border-radius: 5px;
+  border: none;
+}
+
+.newYers {
+  padding: 20px 0 !important;
+  overflow-y: auto;
+  height: 600px;
+}
+.newYers li {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  background-color: #1a2d50;
+  color: #fff;
+  font-size: 18px;
+}
+.newYers li button {
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border: none;
+}
+.newYers li button:nth-child(1) {
+  color: aqua;
+}
+.newYers li button:nth-child(2) {
+  color: red;
+}
+
+.madal-winndow-new-yer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.582);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  display: none;
+}
+.madal-winndow-new-yer.active {
+  display: block;
+}
+.madal-winndow-new-yer .exit-madal-window,
+.madal-winndow-new-yer .exit-madal-window-edit {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: transparent;
+  border: none;
+  color: red;
+  font-size: 25px;
+}
+.madal-winndow-new-yer .madal-window-title {
+  color: #fff;
+  font-size: 20px;
+  display: block;
+  width: 100%;
+  padding: 15px;
+}
+.madal-winndow-new-yer .form-mada-new-yer {
+  display: flex;
+  padding: 15px;
+  align-items: start;
+  justify-content: center;
+  flex-direction: column;
+}
+.madal-winndow-new-yer .form-mada-new-yer label {
+  color: #fff;
+  padding-left: 5px;
+  margin-bottom: 8px;
+}
+.madal-winndow-new-yer .form-mada-new-yer .input-tip {
+  width: 100%;
+}
+.madal-winndow-new-yer .form-mada-new-yer input[type=text],
+.madal-winndow-new-yer .form-mada-new-yer select {
+  width: 100%;
+  padding: 8px 12px;
+  background-color: #1a2d50;
+  color: #fff;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+}
+.madal-winndow-new-yer .form-mada-new-yer .btn_input_seve {
+  width: 100%;
+  display: flex;
+  align-content: center;
+  justify-content: end;
+  padding-top: 20px;
+}
+.madal-winndow-new-yer .form-mada-new-yer .btn_input_seve input {
+  background-color: #1a2d50;
+  color: #fff;
+  border: 1px solid #a3a3a3;
+  padding: 8px 25px;
+  border-radius: 5px;
+}
+
+.madal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  background-color: rgba(0, 0, 0, 0.582);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  display: none;
+  z-index: 216;
+}
+.madal.active {
+  display: block;
+}
+.madal .exit-madal {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: transparent;
+  border: none;
+  color: red;
+  font-size: 25px;
+}
+.madal .madal-title {
+  color: #fff;
+  font-size: 20px;
+  display: block;
+  width: 100%;
+  padding: 15px;
+}
+.madal .medya-form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  flex-direction: column;
+  padding: 15px;
+}
+.madal .medya-form .medya-form-item {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.madal .medya-form .medya-form-item label {
+  color: #fff;
+  padding-left: 10px;
+  margin-bottom: 8px;
+}
+.madal .medya-form .medya-form-item input,
+.madal .medya-form .medya-form-item select {
+  width: 100%;
+  padding: 8px 12px;
+  background-color: #1a2d50;
+  color: #fff;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+}
+.madal .medya-form .medya-form-item button {
+  width: 120px;
+  background-color: #1a2d50;
+  color: #fff;
+  border: 1px solid #a3a3a3;
+  padding: 8px 25px;
+  border-radius: 5px;
+}
+
+.newStudent-craete {
+  width: 100%;
+  margin-bottom: 15px;
+}
+.newStudent-craete .topTitle {
+  color: #fff;
+  font-size: 20px;
+}
+.newStudent-craete .topTitle span {
+  color: #999;
+}
+
+.createStudentMain {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  position: relative;
+}
+.createStudentMain .createItem {
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #1a2d50;
+}
+.createStudentMain .createItem .createItemTitle {
+  color: #fff;
+}
+.createStudentMain .createItem form.studentAddForm {
+  padding: 5px;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: column;
+}
+.createStudentMain .createItem form.studentAddForm .formItemsStudentCreat {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+.createStudentMain .createItem form.studentAddForm .formItemsStudentCreat label {
+  padding-left: 5px;
+  color: #9e9e9e;
+}
+.createStudentMain .createItem form.studentAddForm .formItemsStudentCreat input,
+.createStudentMain .createItem form.studentAddForm .formItemsStudentCreat select {
+  padding: 7px 15px;
+  font-size: 18px;
+  background-color: #314a78;
+  color: #fff;
+  outline: none;
+  border-radius: 5px;
+  border: none;
+}
+.createStudentMain .createItem form.studentAddForm .formItemsStudentCreat button {
+  background-color: #3c8dbc;
+  width: 120px;
+  padding: 7px 12px;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+.createStudentMain .createItem .searchStudent {
+  width: 100%;
+  padding: 7px 12px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  color: #fff;
+  background-color: #314a78;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.createStudentMain .createItem .studentList {
+  height: 480px;
+  overflow-y: auto;
+}
+.createStudentMain .createItem .studentList li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #fff;
+  padding: 8px 15px;
+}
+.createStudentMain .createItem .studentList li p {
+  font-size: 18px;
+  color: #9e9e9e;
+}
+.createStudentMain .createItem .studentList li span {
+  color: #7e7e7e;
+  font-size: 14px;
+  display: block;
+}
+.createStudentMain .createItem .studentList li button {
+  background-color: transparent;
+  border: none;
+}
+.createStudentMain .createItem .studentList li button:nth-child(1) {
+  color: aqua;
+}
+.createStudentMain .createItem .studentList li button:nth-child(2) {
+  color: red;
+  margin-left: 10px;
+}
+
+.select2-search__field {
+  display: none;
+}
+
+.select2-results__options {
+  z-index: 5454654 !important;
+}
+
+.select2-selection {
+  background-color: #314a78 !important;
+  outline: none !important;
+  border: none !important;
+  padding: 5px !important;
+}
+
+.select2-selection__choice {
+  background-color: #1a2d50 !important;
+  color: #fff !important;
+  display: flex !important;
+  align-content: start !important;
+  justify-content: center !important;
+}
+
+.madal_from_teacher {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.madal_from_teacher .select2-selection {
+  background-color: #1a2d50 !important;
+  min-height: 40px !important;
+}
+
+.profilAbout ul {
+  display: flex;
+  flex-direction: column;
+}
+.profilAbout ul li {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+.profilAbout ul li label {
+  color: #e9e9e9;
+  margin-bottom: 5px;
+}
+.profilAbout ul li input {
+  background-color: #1a2d50;
+  padding: 7px 15px;
+  color: #fff;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+}
+.profilAbout ul li button {
+  width: 120px;
+  background-color: #3c8dbc;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.chat {
+  height: 610px;
+  overflow: auto;
+}
+.chat .topBarChatInput {
+  padding-top: 20px;
+}
+.chat .topBarChatInput .topBarChatInputForm {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.chat .topBarChatInput .topBarChatInputForm .topBarChatInputFormItems {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.chat .topBarChatInput .topBarChatInputForm .topBarChatInputFormItems select,
+.chat .topBarChatInput .topBarChatInputForm .topBarChatInputFormItems input {
+  background-color: #1a2d50;
+  color: #fff;
+  width: 250px;
+  padding: 8px;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+}
+.chat .topBarChatInput .topBarChatInputForm button {
+  background-color: #3c8dbc;
+  padding: 7px 15px;
+  border: none;
+  border-radius: 4px;
+}
+.chat .topBarChatInformation {
+  height: 520px;
+  padding: 10px;
+  overflow-y: auto;
+}
+.chat .topBarChatInformation .madalChatInformatio {
+  width: 100%;
+  height: 100%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.chat .topBarChatInformation .madalChatInformatio.active {
+  display: flex;
+}
+.chat .topBarChatInformation .madalChatInformatio img {
+  width: 40%;
+}
+.chat .topBarChatInformation .madalChatStudentInformation {
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+.chat .topBarChatInformation .madalChatStudentInformation.active {
+  display: block;
+}
+.chat .topBarChatInformation .madalChatStudentInformation .madalChatStudentInformationBtn form {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.chat .topBarChatInformation .madalChatStudentInformation .madalChatStudentInformationBtn form button:nth-child(1) {
+  padding: 8px 20px;
+  border-radius: 5px;
+  background-color: #3c8dbc;
+  border: none;
+}
+.chat .topBarChatInformation .madalChatStudentInformation .madalChatStudentInformationBtn form button:nth-child(2) {
+  padding: 8px 20px;
+  border-radius: 5px;
+  background-color: lightgreen;
+  border: none;
+}
+.chat .topBarChatInformation .madalChatStudentInformation .madalChatStudentInformationBtn form button:nth-child(2) img {
+  width: 25px;
+}
+.chat .topBarChatInformation .madalChatStudentInformation ul {
+  padding-top: 10px !important;
+}
+.chat .topBarChatInformation .madalChatStudentInformation ul .firstUser {
+  background-color: #1a2d50;
+  color: #fff;
+  text-align: center;
+}
+.chat .topBarChatInformation .madalChatStudentInformation ul .firstUser p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border: none;
+  border: 1px solid #797979;
+}
+.chat .topBarChatInformation .madalChatStudentInformation ul .firstUser p span {
+  font-size: 12px;
+  color: #999;
+}
+.chat .topBarChatInformation .madalChatStudentInformation ul li {
+  display: grid;
+  grid-template-columns: 0.5fr 3fr 1fr 1fr 1fr 1fr 0.7fr;
+}
+.chat .topBarChatInformation .madalChatStudentInformation ul li .studentNmae {
+  text-align: start;
+}
+.chat .topBarChatInformation .madalChatStudentInformation ul li p {
+  border: 1px solid #797979;
+  text-align: center;
+  width: 100%;
+  padding: 5px;
+  color: #fff;
+}
+.chat .topBarChatInformation .madalChatStudentInformation ul li p input {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  outline: none;
+  text-align: center;
+}
+.chat .chatStatistic {
+  margin-top: 20px;
+  width: 100%;
+}
+.chat .chatStatistic .chatStatisticTitle {
+  color: #fff;
+  font-size: 20px;
+}
+.chat .chatStatistic .chatStatisticInformation {
+  width: 100%;
+}
+.chat .chatStatistic .chatStatisticInformation .searchTeacher {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.chat .chatStatistic .chatStatisticInformation .searchTeacher p {
+  margin-right: 15px !important;
+  color: #fff;
+}
+.chat .chatStatistic .chatStatisticInformation .btnTeacherChat {
+  margin-left: 10px;
+  width: 50px;
+  background-color: #1a2d50;
+  color: orange;
+}
+.chat .chatStatistic .chatStatisticInformation ul {
+  padding: 10px !important;
+}
+.chat .chatStatistic .chatStatisticInformation ul .chatStatisticInformationItems {
+  background-color: #1a2d50;
+}
+.chat .chatStatistic .chatStatisticInformation ul .chatStatisticInformationItems p {
+  text-align: center !important;
+}
+.chat .chatStatistic .chatStatisticInformation ul li {
+  display: grid;
+  grid-template-columns: 0.5fr 4fr 0.5fr;
+  color: #fff;
+}
+.chat .chatStatistic .chatStatisticInformation ul li p {
+  border: 1px solid #999;
+  text-align: center;
+  padding: 8px 15px;
+}
+.chat .chatStatistic .chatStatisticInformation ul li .itemsChat {
+  text-align: start;
+}
+
+.teachers {
+  width: 100%;
+  background-color: #020817;
+  min-height: 100vh;
+  padding: 0 !important;
+}
+.teachers .navbar {
+  width: 100%;
+  background-color: #111827;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 25px;
+}
+.teachers .navbar .logoNavbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.teachers .navbar .logoNavbar img {
+  width: 45px;
+}
+.teachers .navbar .logoNavbar P {
+  color: white;
+  font-size: 20px;
+}
+.teachers .navbar .navbarTitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.teachers .navbar .navbarTitle p {
+  color: orange;
+  font-size: 20px;
+}
+.teachers .navbar .navbarTitle i {
+  width: 35px;
+  height: 35px;
+  border: 1px solid orange;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: orange;
+  border-radius: 50%;
+}
+.teachers .control-form .control-form-add {
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+  padding: 25px 0;
+}
+.teachers .control-form .control-form-add .control-form-add-from {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.teachers .control-form .control-form-add .control-form-add-from select, .teachers .control-form .control-form-add .control-form-add-from input {
+  background-color: #1A2D50;
+  color: #fff;
+  padding: 8px 15px;
+  width: 300px;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+}
+.teachers .control-form .control-form-add button {
+  background-color: #3C8DBC;
+  color: #fff;
+  border: none;
+  padding: 7px 20px;
+  border-radius: 5px;
+}
+.teachers .control-form .teacher-madal {
+  width: 100%;
+  min-height: 70vh;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.teachers .control-form .teacher-madal.active {
+  display: flex;
+}
+.teachers .control-form .teacher-madal img {
+  width: 50%;
+}
+.teachers .control-form .information-students {
+  height: 75vh;
+  overflow-y: auto;
+}
+.teachers .control-form .information-students .information-students-items {
+  background-color: #1A2D50;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+}
+.teachers .control-form .information-students li {
+  display: grid;
+  grid-template-columns: 0.5fr 4fr 1fr;
+  color: #fff;
+  border-bottom: 1px solid #1A2D50;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+.teachers .control-form .information-students li p {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+.teachers .control-form .information-students li p:nth-child(2) {
+  justify-content: start;
+}
+.teachers .control-form .information-students li p input {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  text-align: center;
+  outline: none;
+  color: orange;
+  background-color: #111827;
+  padding: 8px;
+}
+.teachers .control-form .information-students .studentSeve {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+.teachers .control-form .information-students .studentSeve button {
+  background-color: #3C8DBC;
+  padding: 8px 25px;
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+}/*# sourceMappingURL=style.css.map */
