@@ -379,24 +379,27 @@ if ($_SESSION['login']  == 'active') { ?>
                                     <form class="medya-form" action="" method="post">
                                         <div class="medya-form-item">
                                             <label for="">O'quvchi ism yangilash</label>
-                                            <input type="text" name="" id="">
+                                            <input type="text" name="" id="sIsm">
                                         </div>
                                         <div class="medya-form-item">
                                             <label for="">O'quvchi familyasini yangilash</label>
-                                            <input type="text" name="" id="">
+                                            <input type="text" name="" id="sFam">
                                         </div>
                                         <div class="medya-form-item">
                                             <label for="">O'quvchi Telefoni yangilash</label>
-                                            <input type="text" name="" id="">
+                                            <input type="text" name="" id="sTel">
                                         </div>
+                                        <div class="medya-form-item">
+                                            <label for="">O'quvchini Uy Telefoni yangilash</label>
+                                            <input type="text" name="" id="sUyTel">
+                                        </div>
+                                        
                                         <div class="medya-form-item">
                                             <label for="">O'quvchi guruhni yangilash</label>
-                                            <select name="" id="">
-                                                <option value="">08 guruh</option>
-                                            </select>
+                                            <select name="" id="studentDataEditClass"></select>
                                         </div>
                                         <div class="medya-form-item">
-                                            <button type="submit">
+                                            <button type="submit" id="studentDataEditDataDb">
                                                 Saqlash
                                             </button>
                                         </div>
@@ -407,25 +410,26 @@ if ($_SESSION['login']  == 'active') { ?>
                                     <form action="" method="post" class="studentAddForm">
                                         <div class="formItemsStudentCreat">
                                             <label for="">Ism:</label>
-                                            <input type="text" placeholder="Ism">
+                                            <input id="studentName" type="text" placeholder="Ism">
                                         </div>
                                         <div class="formItemsStudentCreat">
                                             <label for="">Familya:</label>
-                                            <input type="text" placeholder="Familya">
+                                            <input id="studentFam" type="text" placeholder="Familya">
                                         </div>
                                         <div class="formItemsStudentCreat">
                                             <label for="">Telefon:</label>
-                                            <input type="text" placeholder="Telefon">
+                                            <input id="studentTel" type="text" placeholder="Telefon">
+                                        </div>
+                                        <div class="formItemsStudentCreat">
+                                            <label for="">Uy Telefon:</label>
+                                            <input id="studentTelUy" type="text" placeholder="Telefon">
                                         </div>
                                         <div class="formItemsStudentCreat">
                                             <label for="">Guruh:</label>
-                                            <select name="" id="">
-                                                <option value="">08 guruh</option>
-                                                <option value="">07 guruh</option>
-                                            </select>
+                                            <select name="" id="studentSelect"></select>
                                         </div>
                                         <div class="formItemsStudentCreat">
-                                            <button type="submit">
+                                            <button id="addStudents" type="submit">
                                                 Saqlash
                                             </button>
                                         </div>
@@ -434,19 +438,7 @@ if ($_SESSION['login']  == 'active') { ?>
                                 <div class="createItem">
                                     <p class="createItemTitle">O'quvchi ro'yhati</p>
                                     <input type="search" class="searchStudent" placeholder="Qidirish...">
-                                    <ul class="studentList">
-                                        <li>
-                                            <div>
-                                                <p>Boburjon Abdunazarov</p>
-                                                <span>+998976665979 08 guruh</span>
-                                            </div>
-                                            <div class="studentEditDelete">
-                                                <button class="editStudentAbout"><i
-                                                        class="fa-solid fa-pen-to-square"></i></button>
-                                                <button><i class="fa-solid fa-trash"></i></button>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                    <ul id="studentsIdItem" class="studentList"></ul>
                                 </div>
                             </div>
                         </div>

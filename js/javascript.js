@@ -68,11 +68,6 @@ document.querySelector('.exitMadalGuruhedit').addEventListener('click', () => {
 });
 
 
-document.querySelectorAll('.editStudentAbout').forEach((item, index) => {
-    item.addEventListener('click', () => {
-        madalOpen(document.querySelector('.madalStudent'))
-    });
-});
 document.querySelector('.madalStudentEditexit').addEventListener('click', () => {
     madalExit(document.querySelector('.madalStudent'))
 });
