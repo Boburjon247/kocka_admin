@@ -63,12 +63,6 @@ document.querySelector('.exitMadalGuruh').addEventListener('click', () => {
 document.querySelector('.guruhAdd').addEventListener('click', () => {
     madalOpen(document.querySelector('.madalGuruh'));
 })
-
-document.querySelectorAll('.editGuruhName').forEach((item, index) => {
-    item.addEventListener('click', () => {
-        madalOpen(document.querySelector('.madalGuruhEdit'))
-    });
-});
 document.querySelector('.exitMadalGuruhedit').addEventListener('click', () => {
     madalExit(document.querySelector('.madalGuruhEdit'))
 });

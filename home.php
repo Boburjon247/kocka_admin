@@ -311,23 +311,21 @@ if ($_SESSION['login']  == 'active') { ?>
                             </div>
                             <div class="main">
                                 <!-- add -->
-                                <div class="madal madalGuruh">
+                                <div  class="madal madalGuruh">
                                     <button class="exit-madal exitMadalGuruh"><i
                                             class="fa-regular fa-circle-xmark"></i></button>
                                     <p class="madal-title">Yangi guruh yaratish</p>
                                     <form class="medya-form" action="" method="post">
                                         <div class="medya-form-item">
                                             <label for="">Guruh nomi kiriting</label>
-                                            <input type="text" placeholder="Yangi guruh nomini kiriting..." name="" id="">
+                                            <input type="text" placeholder="Yangi guruh nomini kiriting..." name="" id="classNameInput">
                                         </div>
                                         <div class="medya-form-item">
                                             <label for="">Guruhni o'quv yiliga briktring.</label>
-                                            <select name="" id="addClassReady">
-                                                
-                                            </select>
+                                            <select name="" id="addClassReady"></select>
                                         </div>
                                         <div class="medya-form-item">
-                                            <button type="submit">
+                                            <button id="addClassDb" type="submit">
                                                 Saqlash
                                             </button>
                                         </div>
@@ -341,10 +339,14 @@ if ($_SESSION['login']  == 'active') { ?>
                                     <form class="medya-form" action="" method="post">
                                         <div class="medya-form-item">
                                             <label for="">Guruh nomi Ynagilng</label>
-                                            <input type="text" placeholder="Yangi guruh nomini yangilang..." name="" id="">
+                                            <input type="text" placeholder="Yangi guruh nomini yangilang..." name="" id="classNameEditInput">
                                         </div>
                                         <div class="medya-form-item">
-                                            <button type="submit">
+                                            <label for="">Guruh nomi Ynagilng</label>
+                                            <select name="" id="classNameEditSelect"></select>
+                                        </div>
+                                        <div class="medya-form-item">
+                                            <button type="submit" id="editClassData">
                                                 Saqlash
                                             </button>
                                         </div>

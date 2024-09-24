@@ -105,6 +105,7 @@ function deleteData($action, $tableName)
 }
 
 deleteData('delateYears', 'years');
+deleteData('delateClass', 'guruh');
 
 
 // malumotni yangilashdan oldin oqib olish uchun
@@ -132,6 +133,7 @@ function editReadyData($tableName, $action)
 }
 
 editReadyData('years', 'editReadyYears');
+editReadyData('guruh', 'editReadyClass');
 
 
 // malumotni yangilash uchun
@@ -140,6 +142,62 @@ if ($_GET['action'] === 'UpdateYears') {
         $id = $_GET['id'];
         $name = mysqli_real_escape_string($db, $_GET['name']);
         $sql = "UPDATE years SET name = '$name' WHERE id = '$id'";
+        if (mysqli_query($db, $sql)) {
+            echo json_encode([
+                "status" => 200,
+                "message" => "Ma'lumot yangilandi 😁"
+            ]);
+        } else {
+            echo json_encode([
+                "status" => 500,
+                "message" => "Ma'lumotlarda xatolik 🚫"
+            ]);
+        }
+        mysqli_close($db);
+    } else {
+        echo json_encode([
+            "status" => 400,
+            "message" => "Ma'lumotlarda xatolik ⛔"
+        ]);
+    }
+}
+
+// yangi guruh qoshish uchun
+
+if ($_GET['action'] === 'insertClassName') {
+    if (
+        (isset($_GET['className']) && !empty($_GET['className'])) &&
+        (isset($_GET['yearsName']) && !empty($_GET['yearsName']))
+    ) {
+        $array = test_input([$_GET['className'],$_GET['yearsName']]);
+        if (getInsert('guruh', ['name', 'year_name'], $array)) {
+            echo json_encode([
+                "status" => 200,
+                "message" => "Yangi guruh qo'shildi 😁"
+            ]);
+        } else {
+            echo json_encode([
+                "status" => 500,
+                "message" => "Ma'lumotlarda xatolik yoki tarmoqga ulanmaga 😒",
+            ]);
+        }
+    } else {
+        echo json_encode([
+            "status" => 400,
+            "message" => "Iltimos ma'lumotlarni to'ldiring 😒"
+        ]);
+    }
+}
+// malumotlarni oqib olish uchun
+if ($_GET['action'] === 'UpdateClass') {
+    if (
+        (isset($_GET['name']) && !empty($_GET['name'])) && 
+        (isset($_GET['nameYear']) && !empty($_GET['nameYear'])) 
+        ) {
+        $id = $_GET['id'];
+        $name = mysqli_real_escape_string($db, $_GET['name']);
+        $nameYear = mysqli_real_escape_string($db, $_GET['nameYear']);
+        $sql = "UPDATE guruh SET name = '$name' , year_name = '$nameYear' WHERE id = '$id'";
         if (mysqli_query($db, $sql)) {
             echo json_encode([
                 "status" => 200,

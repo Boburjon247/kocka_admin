@@ -43,7 +43,7 @@ $(document).ready(function () {
     }
     fetchData();
 
-    // yangi oquv yili qoshihs
+    // yangi oquv yili qoshish
     $('#yearAddBtn').on('click', (e) => {
         e.preventDefault();
         $.ajax({
@@ -163,8 +163,8 @@ $(document).ready(function () {
                                  <span style="font-size:14px;">${value.year_name}</span>
                             </p>
                             <div>
-                                <button class="editGuruhName"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button ><i class="fa-solid fa-trash"></i></button>
+                                <button id="editClassName" value="${value.id}"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button id="classDeleteId" value="${value.id}"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </div>    
                     `)
@@ -178,16 +178,16 @@ $(document).ready(function () {
 
     // guruh yaratishda oquv yilini oqib olish uchun 
 
-    function fetchDataAddYearsClass() {
+    function fetchDataAddYearsClass(id) {
         $.ajax({
             url: `${url}?action=fetchDataClassReadyYearsName`,
             type: "GET",
             dataType: "json",
             success: function (response) {
                 let data = response.data;
-                $('#addClassReady').empty();
-                $.each(data, function (index, value) {                    
-                    $('#addClassReady').append(`
+                $(id).empty();
+                $.each(data, function (index, value) {
+                    $(id).append(`
                         <option value="${value.name}">${value.name}</option>
                     `)
                 });
@@ -195,11 +195,109 @@ $(document).ready(function () {
         });
     }
 
-    $('.addClassModalActiveJq').on('click', ()=>{
-        fetchDataAddYearsClass();
+    $('.addClassModalActiveJq').on('click', () => {
+        fetchDataAddYearsClass('#addClassReady');
     });
 
+
+    // yangi guruh qoshihs uchun
+    $('#addClassDb').on('click', (e) => {
+        e.preventDefault();
+        $.ajax({
+            data: {
+                className: $('#classNameInput').val(),
+                yearsName: $('#addClassReady').val()
+            },
+            url: `${url}?action=insertClassName`,
+            type: "GET",
+            success: function (data) {
+                let classData = JSON.parse(data);
+                if (classData.status == 200) {
+                    fetchDataClass();
+                    $('#classNameInput').val(' ');
+                    $('.madalGuruh').removeClass('active');
+                    modal(classData.message, 'success');
+                }
+                else if(classData.status == 500){
+                    modal(classData.message, 'error');
+                }
+                else if(classData.status == 400){
+                    modal(classData.message, 'error');
+                }
+
+            }
+        });
+    });
+
+    //guruhni o'chirish
+    $('.newClassBlock').on('click', '#classDeleteId', (e) => {
+        id = e.currentTarget.attributes.value.value;
+        $.ajax({
+            data: { id: id, },
+            type: "GET",
+            url: `${url}?action=delateClass`,
+            success: function (data) {
+                let dataDeleteClass = JSON.parse(data);
+                if (dataDeleteClass.status == 200) {
+                    fetchDataClass();
+                    modal(dataDeleteClass.message, 'error');
+                }
+                else if (dataDelete.status == 500) {
+                    madal(dataDeleteClass.message, 'error')
+                }
+            }
+        })
+    });
+
+    // guruh malumotlarni yangilash uchun
     
+    // oqib olish uchun
+    $('.newClassBlock').on('click', '#editClassName', (e) => {
+        id = e.currentTarget.attributes.value.value;
+        $('.madalGuruhEdit').addClass('active');
+        $.ajax({
+            data: { id: id },
+            type: "GET",
+            url: `${url}?action=editReadyClass`,
+            dataType: "json",
+            success: function (response) {
+                let classReadyData = response.data;
+                $('#classNameEditInput').val(classReadyData.name);
+                fetchDataAddYearsClass('#classNameEditSelect');
+            }
+        })
+
+    });
+
+    $('#editClassData').on('click', (e) => {
+        e.preventDefault();
+        $.ajax({
+            url: `${url}?action=UpdateClass`,
+            type: "GET",
+            data: {
+                id: id,
+                name: $('#classNameEditInput').val(),
+                nameYear: $('#classNameEditSelect').val(),
+            },
+            success: function (data) {
+                let updateClass = JSON.parse(data);                
+                if (updateClass.status == 200) {
+                    fetchDataClass();
+                    modal(updateClass.message, 'success');
+                    $('.madalGuruhEdit').removeClass('active');
+                }
+                else if (updateClass.status == 400) {
+                    modal(updateClass.message, 'error');
+                }
+                else if (updateClass.status == 500) {
+                    modal(updateClass.message, 'error');
+                }
+            }
+        });
+    });
+
+
+
 
 
 
