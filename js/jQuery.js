@@ -1,10 +1,11 @@
 $(".js-example-tokenizer").select2({
     tags: true,
     tokenSeparators: [',', ' '],
-    multiple:true,
+    multiple: true,
 })
 $(".js-example-tokenizer1").select2({
     tags: true,
     tokenSeparators: [',', ' '],
-    multiple:true,
-})
+    multiple: true,
+});
+

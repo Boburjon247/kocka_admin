@@ -55,6 +55,7 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
   background-color: #020817;
 }
 .containerLogin .login {
@@ -364,7 +365,7 @@ p {
   overflow-y: auto;
   height: 600px;
 }
-.newYers li {
+.newYers .newYers-item {
   width: 100%;
   display: flex;
   align-items: center;
@@ -376,16 +377,16 @@ p {
   color: #fff;
   font-size: 18px;
 }
-.newYers li button {
+.newYers .newYers-item button {
   width: 30px;
   height: 30px;
   background-color: transparent;
   border: none;
 }
-.newYers li button:nth-child(1) {
+.newYers .newYers-item button:nth-child(1) {
   color: aqua;
 }
-.newYers li button:nth-child(2) {
+.newYers .newYers-item button:nth-child(2) {
   color: red;
 }
 
@@ -935,8 +936,9 @@ p {
   justify-content: center;
   gap: 20px;
 }
-.teachers .control-form .control-form-add .control-form-add-from select, .teachers .control-form .control-form-add .control-form-add-from input {
-  background-color: #1A2D50;
+.teachers .control-form .control-form-add .control-form-add-from select,
+.teachers .control-form .control-form-add .control-form-add-from input {
+  background-color: #1a2d50;
   color: #fff;
   padding: 8px 15px;
   width: 300px;
@@ -945,7 +947,7 @@ p {
   border-radius: 4px;
 }
 .teachers .control-form .control-form-add button {
-  background-color: #3C8DBC;
+  background-color: #3c8dbc;
   color: #fff;
   border: none;
   padding: 7px 20px;
@@ -969,7 +971,7 @@ p {
   overflow-y: auto;
 }
 .teachers .control-form .information-students .information-students-items {
-  background-color: #1A2D50;
+  background-color: #1a2d50;
   color: #fff;
   text-align: center;
   padding: 5px;
@@ -978,7 +980,7 @@ p {
   display: grid;
   grid-template-columns: 0.5fr 4fr 1fr;
   color: #fff;
-  border-bottom: 1px solid #1A2D50;
+  border-bottom: 1px solid #1a2d50;
   padding: 5px;
   margin-bottom: 5px;
 }
@@ -1008,9 +1010,77 @@ p {
   justify-content: end;
 }
 .teachers .control-form .information-students .studentSeve button {
-  background-color: #3C8DBC;
+  background-color: #3c8dbc;
   padding: 8px 25px;
   border: none;
   color: #fff;
   border-radius: 5px;
+}
+
+.madalLogin {
+  position: fixed;
+  bottom: 20px;
+  right: -200%;
+  background-color: rgb(158, 47, 47);
+  color: #fff;
+  padding: 10px 25px;
+  display: none;
+}
+.madalLogin.active {
+  display: block;
+  animation: madalLogin 5s 1;
+}
+
+@keyframes madalLogin {
+  0% {
+    bottom: 20px;
+    right: -200%;
+  }
+  10% {
+    bottom: 20px;
+    right: 20px;
+  }
+  75% {
+    bottom: 20px;
+    right: 20px;
+  }
+  100% {
+    bottom: 20px;
+    right: -200%;
+  }
+}
+.madal_main {
+  position: fixed;
+  bottom: 10px;
+  right: -150%;
+  z-index: 5566546;
+  padding: 10px 25px;
+  border-radius: 5px;
+}
+
+.madal_main.active {
+  animation: madal_main1 4s 1;
+}
+
+.madal_main.success {
+  background-color: lime;
+}
+
+.madal_main.error {
+  background-color: red;
+}
+
+@keyframes madal_main1 {
+  0% {
+    right: -150%;
+  }
+  20% {
+    right: 10px;
+  }
+  80% {
+    right: 10px;
+  }
+  100% {
+    right: -150%;
+  }
 }/*# sourceMappingURL=style.css.map */

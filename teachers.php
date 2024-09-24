@@ -1,3 +1,8 @@
+<?php
+    include  'config.php';
+    include 'libs/libs.php';
+    global $config;
+?>
 <!DOCTYPE html>
 <html lang="en">
 
