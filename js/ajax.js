@@ -25,14 +25,17 @@ $(document).ready(function () {
                 let data = response.data;
                 $('.newYersid').empty();
                 $.each(data, function (index, value) {
+                    let activeYears = '';
+                    (value.active === 'true') ? activeYears = 'checked' : activeYears = '';
                     $('.newYersid').append(`
                             <div class="newYers-item">
                                 <p>
                                     ${value.name}
                                 </p>
                                 <div>
-                                    <button id="edit_new-yer" value="${value.id}" class="preventDefault" ><i class="fa-solid fa-pen-to-square"></i></button>
-                                    <button id="deleteYears" value="${value.id}" class="deleteYears"><i class="fa-solid fa-trash"></i></button>
+                                    <input id="yearsActive" value="${value.id}" type="checkbox" ${activeYears} style="margin-right:5px" class="form-check-input">
+                                    <button style="color:aqua" id="edit_new-yer" value="${value.id}" class="preventDefault" ><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button style="color:red" id="deleteYears" value="${value.id}" class="deleteYears"><i class="fa-solid fa-trash"></i></button>
                                 </div>
                             </div>       
                     `)
@@ -43,12 +46,42 @@ $(document).ready(function () {
     }
     fetchData();
 
+    $('.newYersid').on('click', '#yearsActive', (e) => {
+        $target = e.target.checked;
+        $id = e.target.value;
+        
+        
+        e.preventDefault();
+        $.ajax({
+            url: `${url}?action=UpdateYearsTarget`,
+            type: "GET",
+            data: {
+                id: $id,
+                name: $target,
+            },
+            success: function (data) {
+                let updateYearsTarget = JSON.parse(data);
+                if (updateYearsTarget.status == 200) {
+                    fetchData();
+                    modal(updateYearsTarget.message, 'success');
+                }
+                else if (updateYearsTarget.status == 400) {
+                    modal(updateYearsTarget.message, 'error');
+                }
+                else if (updateYearsTarget.status == 500) {
+                    modal(updateYearsTarget.message, 'error');
+                }
+            }
+        });
+    });
+
     // yangi oquv yili qoshish
     $('#yearAddBtn').on('click', (e) => {
         e.preventDefault();
         $.ajax({
             data: {
-                name: $('#yearsAddInput').val()
+                name: $('#yearsAddInput').val(),
+                active:'false',
             },
             url: `${url}?action=insertYears`,
             type: "GET",
@@ -178,7 +211,7 @@ $(document).ready(function () {
 
     // guruh yaratishda oquv yilini oqib olish uchun 
 
-    function fetchDataAddYearsClass(id,action) {
+    function fetchDataAddYearsClass(id, action) {
         $.ajax({
             url: `${url}?action=${action}`,
             type: "GET",
@@ -188,18 +221,36 @@ $(document).ready(function () {
                 $(id).empty();
                 $.each(data, function (index, value) {
                     $(id).append(`
-                        <option value="${value.name}">${value.name}</option>
+                        <option value="${value.id}">${value.name}</option>
                     `)
                 });
             }
         });
     }
 
+    function fetchDataAddYearsTeachers(id, action) {
+        $.ajax({
+            url: `${url}?action=${action}`,
+            type: "GET",
+            dataType: "json",
+            success: function (response) {
+                let data = response.data;
+                $(id).empty();
+                $.each(data, function (index, value) {
+                    $(id).append(`
+                        <option value="${value.id}">${value.ism} ${value.fam}</option>
+                    `)
+                });
+            }
+        });
+    }
+    fetchDataAddYearsTeachers('#teachersClassAddId2', 'fetchDataClassName2');
+
+
     $('.addClassModalActiveJq').on('click', () => {
-        fetchDataAddYearsClass('#addClassReady','fetchDataClassReadyYearsName');
+        fetchDataAddYearsClass('#addClassReady', 'fetchDataClassReadyYearsName');
         fetchDataAddYearsClass('#studentSelect', 'fetchDataClassName');
     });
-
 
     // yangi guruh qoshihs uchun
     $('#addClassDb').on('click', (e) => {
@@ -300,7 +351,7 @@ $(document).ready(function () {
 
 
     // oquvchilar bilan ishlash
-    
+
     // oquvchilar malumotlarni oqib olish
     function fetchDataStudents() {
         $.ajax({
@@ -318,7 +369,7 @@ $(document).ready(function () {
                                 <p>
                                     <span>Talaba: ${value.tel}</span>
                                     <span>Talaba Uy: ${value.uy_tel}</span>
-                                    <span>Guruh: ${value.guruh_name }</span>
+                                    <span>Guruh: ${value.guruh_name}</span>
                                 </p>
                             </div>
                             <div class="studentEditDelete">
@@ -336,7 +387,7 @@ $(document).ready(function () {
 
     // oquvchini ochirish
     $('#studentsIdItem').on('click', '#deleteStudents', (e) => {
-        id = e.currentTarget.attributes.value.value;        
+        id = e.currentTarget.attributes.value.value;
         $.ajax({
             data: { id: id, },
             type: "GET",
@@ -357,7 +408,7 @@ $(document).ready(function () {
     // yangi student qoshish uchun
 
     $('#addStudents').on('click', (e) => {
-        e.preventDefault();                
+        e.preventDefault();
         $.ajax({
             data: {
                 ism: $('#studentName').val(),
@@ -384,12 +435,14 @@ $(document).ready(function () {
             }
         });
     });
+
     fetchDataAddYearsClass('#studentSelect', 'fetchDataClassName');
+    fetchDataAddYearsClass('#teachersClassAddId', 'fetchDataTeachersName');
 
     // malumotni ozgartirish uchun oqib olish
     $('#studentsIdItem').on('click', '#editModalAdd', (e) => {
         id = e.currentTarget.attributes.value.value;
-        $('.madalStudent').addClass('active');        
+        $('.madalStudent').addClass('active');
         $.ajax({
             data: { id: id },
             type: "GET",
@@ -407,8 +460,9 @@ $(document).ready(function () {
 
     });
 
+    // malumotlarni ozgartrish
     $('#studentDataEditDataDb').on('click', (e) => {
-        e.preventDefault();  
+        e.preventDefault();
         $.ajax({
             url: `${url}?action=UpdateStudents`,
             type: "GET",
@@ -421,7 +475,7 @@ $(document).ready(function () {
                 guruh_name: $('#studentDataEditClass').val()
             },
             success: function (data) {
-                let updateStudents= JSON.parse(data);                
+                let updateStudents = JSON.parse(data);
                 if (updateStudents.status == 200) {
                     fetchDataStudents()
                     modal(updateStudents.message, 'success');
@@ -438,11 +492,195 @@ $(document).ready(function () {
     });
 
 
+    function profileEdit() {
+        $('.madalStudent').addClass('active');
+        $.ajax({
+            data: { id: 1 },
+            type: "GET",
+            url: `${url}?action=profileEdit`,
+            dataType: "json",
+            success: function (response) {
+                let profileData = response.data;
+                $('#profileIsm').val(profileData.ism),
+                    $('#profileFam').val(profileData.fam),
+                    $('#profileTel').val(profileData.tel),
+                    $('#profileLogin').val(profileData.login),
+                    $('#profileParol').val(profileData.parol)
+            }
+        })
+    }
+    profileEdit();
+
+    // profile malumotlarni ozgartrish
+    $('#profileEditBtn').on('click', (e) => {
+        e.preventDefault();
+        $.ajax({
+            url: `${url}?action=UpdateProfile`,
+            type: "GET",
+            data: {
+                id: 1,
+                ism: $('#profileIsm').val(),
+                fam: $('#profileFam').val(),
+                tel: $('#profileTel').val(),
+                login: $('#profileLogin').val(),
+                parol: $('#profileParol').val()
+            },
+            success: function (data) {
+                let updateProfile = JSON.parse(data);
+                if (updateProfile.status == 200) {
+                    modal(updateProfile.message, 'success');
+                }
+                else if (updateProfile.status == 400) {
+                    modal(updateProfile.message, 'error');
+                }
+                else if (updateProfile.status == 500) {
+                    modal(updateProfile.message, 'error');
+                }
+            }
+        });
+    });
+
     
+    
+    
+    // oqtuvchilar bilan ishlash
+
+    // oqib olish uchun
+    function fetchDataTeachers() {
+        $.ajax({
+            url: `${url}?action=fetchDataTeachersReady`,
+            type: "GET",
+            dataType: "json",
+            success: function (response) {
+                let dataTeacher = response.data;
+
+                $('#teachersList').empty();
+                $.each(dataTeacher, function (index, value) {
+                    $('#teachersList').append(`
+                        <li>
+                            <div>
+                                <p>${value.ism} ${value.fam}</p>
+                                <p>
+                                    <span>Tel: ${value.tel}</span>
+                                    <span>Login: ${value.login}</span>
+                                    <span>Parol: ${value.parol}</span>
+                                    <span>Guruhlar: ${value.groups} </span>
+                                    <span>O'quv yili: ${value.year_name} </span>
+                                </p>
+                            </div>
+                            <div class="studentEditDelete">
+                                <button id="teacherDelete" value="${value.id}"><i class="fa-solid fa-trash" style="color:red"></i></button>
+                            </div>
+                        </li>  
+                    `)
+                });
+
+            }
+        });
+    }
+
+    fetchDataTeachers();
 
 
+    // qoshish
+    $('#addTeacher').on('click', (e) => {
+        e.preventDefault();
+        $.ajax({
+            data: {
+                ism: $('#teacherName').val(),
+                fam: $('#teacherFam').val(),
+                tel: $('#teacherTel').val(),
+                login: $('#login').val(),
+                parol: $('#parol').val(),
+            },
+            url: `${url}?action=teachersAdd`,
+            type: "GET",
+            success: function (data) {
+                let studentsData = JSON.parse(data);
+                console.log(studentsData);
+                if (studentsData.status == 200) {
+                    fetchDataTeachers();
+                    fetchDataAddYearsTeachers('#teachersClassAddId2', 'fetchDataClassName2');
+                    modal(studentsData.message, 'success');
+                }
+                else if (studentsData.status == 500) {
+                    modal(studentsData.message, 'error');
+                }
+                else if (studentsData.status == 400) {
+                    modal(studentsData.message, 'error');
+                }
+
+            }
+        });
+    });
+
+
+    //o'qtuvchini o'chirish
+    $('#teachersList').on('click', '#teacherDelete', (e) => {
+        id = e.currentTarget.attributes.value.value;                
+        $.ajax({
+            data: { id: id, },
+            type: "GET",
+            url: `${url}?action=delateTeachers`,
+            success: function (data) {
+                let dataDeleteTeachers = JSON.parse(data);
+                if (dataDeleteTeachers.status == 200) {
+                    fetchDataTeachers();
+                    modal(dataDeleteTeachers.message, 'error');
+                }
+                else if (dataDelete.status == 500) {
+                    madal(dataDeleteTeachers.message, 'error')
+                }
+            }
+        })
     
-    
+    });
+
+    // oqtuvchini guruhga biriktrish 
+    $('#classAddTeachers').on('click',(e)=>{
+        e.preventDefault();        
+        $.ajax({
+            data: {
+                guruhId:$('#teachersClassAddId').val(),
+                teachersId:$('#teachersClassAddId2').val(),
+            },
+            url: `${url}?action=teachersAddClass`,
+            type: "GET",
+            success: function (data) {
+                let teachersData = JSON.parse(data);
+                if (teachersData.status == 200) {
+                    fetchDataTeachers();
+                    modal(teachersData.message, 'success');
+                    $('#teacherName').val('')
+                    $('#teacherFam').val('')
+                    $('#teacherTel').val('')
+                    $('#login').val('')
+                    $('#parol').val('')
+                }
+                else if (teachersData.status == 500) {
+                    modal(teachersData.message, 'error');
+                }
+                else if (teachersData.status == 400) {
+                    modal(teachersData.message, 'error');
+                }
+
+            }
+        });
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

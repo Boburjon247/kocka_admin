@@ -31,6 +31,31 @@ if ($_GET['action'] === 'login') {
     }
 }
 
+if ($_GET['action'] === 'UpdateYearsTarget') {
+    if (isset($_GET['name']) && !empty($_GET['name'])) {
+        $id = $_GET['id'];
+        $name = mysqli_real_escape_string($db, $_GET['name']);
+        $sql = "UPDATE years SET active = '$name' WHERE id = '$id'";
+        if (mysqli_query($db, $sql)) {
+            echo json_encode([
+                "status" => 200,
+                "message" => "O'quv yili ma'lumotlari o'zgartirildi 😁"
+            ]);
+        } else {
+            echo json_encode([
+                "status" => 500,
+                "message" => "Ma'lumotlarda xatolik 🚫"
+            ]);
+        }
+        mysqli_close($db);
+    } else {
+        echo json_encode([
+            "status" => 400,
+            "message" => "Ma'lumotlarda xatolik ⛔"
+        ]);
+    }
+}
+
 // fetchData o'qib oolish
 function fetchData($tableName, $action)
 {
@@ -55,20 +80,66 @@ function fetchData($tableName, $action)
 
 fetchData('years', 'fetchDataYearsReady');
 fetchData('guruh', 'fetchDataClassReady');
-fetchData('years', 'fetchDataClassReadyYearsName');
 fetchData('guruh', 'fetchDataClassName');
+fetchData('teachers', 'fetchDataClassName2');
+fetchData('guruh', 'fetchDataTeachersName');
 fetchData('students', 'fetchDataStudentsReady');
 fetchData('guruh', 'fetchDataStudentClassReadyName');
 
+// malumotni aytni bir qatir boyicha oqib olish
+function fetchDataColum($action, $tableName, $col, $val)
+{
+    $db = connection();
 
+    if ($_GET['action'] === $action) {
+        $sql = "SELECT * FROM $tableName WHERE  $col = '$val' ORDER BY id desc";
+        $result = mysqli_query($db, $sql);
+        $data = [];
+        ksort($data);
+        while ($row = mysqli_fetch_assoc($result)) {
+            $data[] = $row;
+        }
+        mysqli_close($db);
+
+        header("Content-Type: application/json");
+        echo json_encode([
+            'data' => $data,
+        ]);
+    }
+}
+fetchDataColum('fetchDataClassReadyYearsName', 'years', 'active', 'true');
+
+
+
+
+function fetchDataId($yearsName)
+{
+    $db = connection();
+    if ($_GET['action'] === 'fetchDataTeachersReady') {
+        $sql = "SELECT teachers.id, teachers.ism, teachers.fam,teachers.tel,teachers.login,teachers.parol, GROUP_CONCAT(guruh.name SEPARATOR ', ') AS groups, guruh.year_name FROM guruh_idtecher_id LEFT JOIN guruh on guruh_idtecher_id.guruh_id=guruh.id LEFT JOIN teachers on guruh_idtecher_id.teacher_id=teachers.id WHERE guruh.year_name = '$yearsName' GROUP BY teachers.id";
+        $result = mysqli_query($db, $sql);
+        $data = [];
+        ksort($data);
+        while ($row = mysqli_fetch_assoc($result)) {
+            $data[] = $row;
+        }
+        mysqli_close($db);
+
+        header("Content-Type: application/json");
+        echo json_encode([
+            'data' => $data,
+        ]);
+    }
+}
+fetchDataId(trim(addslashes("2024-2025 o'quv yili (kuzgi)")));
 
 
 // qoshish o'quv yili
 
 if ($_GET['action'] === 'insertYears') {
     if (isset($_GET['name']) && !empty($_GET['name'])) {
-        $array = test_input([$_GET['name']]);
-        if (getInsert('years', ['name'], $array)) {
+        $array = test_input([$_GET['name'], $_GET['active']]);
+        if (getInsert('years', ['name', 'active'], $array)) {
             echo json_encode([
                 "status" => 200,
                 "message" => "Yangi o'quv yili qo'shildi 😁"
@@ -111,6 +182,7 @@ function deleteData($action, $tableName)
 deleteData('delateYears', 'years');
 deleteData('delateClass', 'guruh');
 deleteData('delateStudents', 'students');
+deleteData('delateTeachers', 'teachers');
 
 
 // malumotni yangilashdan oldin oqib olish uchun
@@ -140,6 +212,7 @@ function editReadyData($tableName, $action)
 editReadyData('years', 'editReadyYears');
 editReadyData('guruh', 'editReadyClass');
 editReadyData('students', 'editReadyStudents');
+editReadyData('admin', 'profileEdit');
 
 
 // malumotni yil yangilash uchun
@@ -233,30 +306,29 @@ if ($_GET['action'] === 'studentsClassName') {
         (isset($_GET['fam']) && !empty($_GET['fam'])) &&
         (isset($_GET['tel']) && !empty($_GET['tel'])) &&
         (isset($_GET['uy_tel']) && !empty($_GET['uy_tel'])) &&
-        (isset($_GET['guruh_name']) && !empty($_GET['guruh_name'])) 
+        (isset($_GET['guruh_name']) && !empty($_GET['guruh_name']))
     ) {
         $array = test_input(
             [
-                    $_GET['ism'], 
-                    $_GET['fam'],
-                    $_GET['tel'],
-                    $_GET['uy_tel'],
-                    $_GET['guruh_name']
-                ]);
+                $_GET['ism'],
+                $_GET['fam'],
+                $_GET['tel'],
+                $_GET['uy_tel'],
+                $_GET['guruh_name']
+            ]
+        );
         if (getInsert('students', ['ism', 'fam', 'tel', 'uy_tel', 'guruh_name'], $array)) {
             echo json_encode([
                 "status" => 200,
                 "message" => "Yangi talaba qo'shildi 😁"
             ]);
-        }
-        else {
+        } else {
             echo json_encode([
                 "status" => 500,
                 "message" => "Ma'lumotlarda xatolik yoki tarmoqga ulanmaga 😒",
             ]);
         }
-    }
-    else {
+    } else {
         echo json_encode([
             "status" => 400,
             "message" => "Iltimos ma'lumotlarni to'ldiring 😒"
@@ -271,7 +343,7 @@ if ($_GET['action'] === 'UpdateStudents') {
         (isset($_GET['tel']) && !empty($_GET['tel'])) &&
         (isset($_GET['uy_tel']) && !empty($_GET['uy_tel'])) &&
         (isset($_GET['guruh_name']) && !empty($_GET['guruh_name']))
-        ) {
+    ) {
         $id = $_GET['id'];
         $name = mysqli_real_escape_string($db, $_GET['ism']);
         $fam = mysqli_real_escape_string($db, $_GET['fam']);
@@ -299,3 +371,108 @@ if ($_GET['action'] === 'UpdateStudents') {
     }
 }
 
+
+// admin profile edit
+// yangilash
+if ($_GET['action'] === 'UpdateProfile') {
+    if (
+        (isset($_GET['ism']) && !empty($_GET['ism'])) &&
+        (isset($_GET['fam']) && !empty($_GET['fam'])) &&
+        (isset($_GET['tel']) && !empty($_GET['tel'])) &&
+        (isset($_GET['login']) && !empty($_GET['login'])) &&
+        (isset($_GET['parol']) && !empty($_GET['parol']))
+    ) {
+        $id = $_GET['id'];
+        $name = mysqli_real_escape_string($db, $_GET['ism']);
+        $fam = mysqli_real_escape_string($db, $_GET['fam']);
+        $tel = mysqli_real_escape_string($db, $_GET['tel']);
+        $login = mysqli_real_escape_string($db, $_GET['login']);
+        $parol = mysqli_real_escape_string($db, $_GET['parol']);
+        $sql = "UPDATE admin SET ism = '$name', fam = '$fam', tel = '$tel', login = '$login', parol = '$parol'  WHERE id = '$id'";
+        if (mysqli_query($db, $sql)) {
+            echo json_encode([
+                "status" => 200,
+                "message" => "Ma'lumot yangilandi 😁"
+            ]);
+        } else {
+            echo json_encode([
+                "status" => 500,
+                "message" => "Ma'lumotlarda xatolik 🚫"
+            ]);
+        }
+        mysqli_close($db);
+    } else {
+        echo json_encode([
+            "status" => 400,
+            "message" => "Ma'lumotlarda xatolik ⛔"
+        ]);
+    }
+}
+
+// oqtuvchi qoshish uchun
+if ($_GET['action'] === 'teachersAdd') {
+    if (
+        (isset($_GET['ism']) && !empty($_GET['ism'])) &&
+        (isset($_GET['fam']) && !empty($_GET['fam'])) &&
+        (isset($_GET['tel']) && !empty($_GET['tel'])) &&
+        (isset($_GET['login']) && !empty($_GET['login'])) &&
+        (isset($_GET['parol']) && !empty($_GET['parol']))
+    ) {
+        $array = test_input(
+            [
+                $_GET['ism'],
+                $_GET['fam'],
+                $_GET['tel'],
+                $_GET['login'],
+                $_GET['parol']
+            ]
+        );
+        if (getInsert('teachers', ['ism', 'fam', 'tel', 'login', 'parol'], $array)) {
+            echo json_encode([
+                "status" => 200,
+                "message" => "Yangi O'qtuvchi qo'shildi 😁"
+            ]);
+        } else {
+            echo json_encode([
+                "status" => 500,
+                "message" => "Ma'lumotlarda xatolik yoki tarmoqga ulanmaga 😒",
+            ]);
+        }
+    } else {
+        echo json_encode([
+            "status" => 400,
+            "message" => "Iltimos ma'lumotlarni to'ldiring 😒"
+        ]);
+    }
+}
+
+// guruhni teacherga biriktrish
+if ($_GET['action'] === 'teachersAddClass') {
+    if (
+        (isset($_GET['guruhId']) && !empty($_GET['guruhId'])) &&
+        (isset($_GET['teachersId']) && !empty($_GET['teachersId']))
+    ) {
+        $array = test_input(
+            [
+                $_GET['teachersId'],
+                $_GET['guruhId']
+            ]
+        );
+        if (getInsert('guruh_idtecher_id', ['teacher_id', 'guruh_id'], $array)) {
+            echo json_encode([
+                "status" => 200,
+                "message" => "O'qtuvchi Guruhga Biriktrildi 😁"
+            ]);
+        } else {
+            echo json_encode([
+                "status" => 500,
+                "message" => "Ma'lumotlarda xatolik yoki tarmoqga ulanmaga 😒",
+            ]);
+        }
+    } else {
+        echo json_encode([
+            "status" => 400,
+            "message" => "Iltimos ma'lumotlarni to'ldiring 😒"
+        ]);
+    }
+}

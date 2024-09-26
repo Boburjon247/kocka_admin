@@ -227,4 +227,6 @@ function getHasId($tablename, $col, $id, $condition = null)
             return true;
          return false;
 }
+
+
 ?>

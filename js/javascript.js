@@ -16,7 +16,7 @@ function hideTab(params) {
 function showTab(index) {
     homeMineBlokItem[index].classList.add('active');
     mainItems[index].classList.add('active');
-    loading[index].classList.add('active');
+    // loading[index].classList.add('active');
 }
 hideTab();
 showTab(0)

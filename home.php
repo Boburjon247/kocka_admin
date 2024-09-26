@@ -83,6 +83,7 @@ if ($_SESSION['login']  == 'active') { ?>
                     </div>
                 </div>
                 <div class="col-10 container-home-row-colRight">
+
                     <div class="main-right-blok-top">
                         <button><i class="fa-solid fa-gear"></i></button>
                         <div class="user_name">
@@ -90,7 +91,6 @@ if ($_SESSION['login']  == 'active') { ?>
                             <i class="fa-regular fa-user"></i>
                         </div>
                     </div>
-
                     <div class="main-right-blok">
                         <!-- Bosh sahifa -->
                         <div class="home-mine-blok-item">
@@ -311,7 +311,7 @@ if ($_SESSION['login']  == 'active') { ?>
                             </div>
                             <div class="main">
                                 <!-- add -->
-                                <div  class="madal madalGuruh">
+                                <div class="madal madalGuruh">
                                     <button class="exit-madal exitMadalGuruh"><i
                                             class="fa-regular fa-circle-xmark"></i></button>
                                     <p class="madal-title">Yangi guruh yaratish</p>
@@ -329,6 +329,7 @@ if ($_SESSION['login']  == 'active') { ?>
                                                 Saqlash
                                             </button>
                                         </div>
+
                                     </form>
                                 </div>
                                 <!-- edit -->
@@ -393,7 +394,7 @@ if ($_SESSION['login']  == 'active') { ?>
                                             <label for="">O'quvchini Uy Telefoni yangilash</label>
                                             <input type="text" name="" id="sUyTel">
                                         </div>
-                                        
+
                                         <div class="medya-form-item">
                                             <label for="">O'quvchi guruhni yangilash</label>
                                             <select name="" id="studentDataEditClass"></select>
@@ -452,7 +453,7 @@ if ($_SESSION['login']  == 'active') { ?>
                             </div>
                             <div class="createStudentMain">
                                 <!-- madal active -->
-                                <div class="madal madalTeacherEdit">
+                                <!-- <div class="madal madalTeacherEdit">
                                     <button class="exit-madal madalTeacherEditexit">
                                         <i class="fa-regular fa-circle-xmark"></i></button>
                                     <p class="madal-title">O'qtuvchi ma'lumotlarini yangilash</p>
@@ -460,23 +461,23 @@ if ($_SESSION['login']  == 'active') { ?>
                                         <div class="madal_from_teacher">
                                             <div class="medya-form-item">
                                                 <label for="">O'qtuvchi ism yangilash</label>
-                                                <input type="text" name="" id="">
+                                                <input type="text" name="">
                                             </div>
                                             <div class="medya-form-item">
                                                 <label for="">O'qtuvchi familyasini yangilash</label>
-                                                <input type="text" name="" id="">
+                                                <input type="text" name="">
                                             </div>
                                             <div class="medya-form-item">
                                                 <label for="">O'qtuvchi telefoni yangilash</label>
-                                                <input type="text" name="" id="">
+                                                <input type="text" name="">
                                             </div>
                                             <div class="medya-form-item">
                                                 <label for="">O'qtuvchi login yangilash</label>
-                                                <input type="text" name="" id="">
+                                                <input type="text" name="">
                                             </div>
                                             <div class="medya-form-item">
                                                 <label for="">O'qtuvchi parol yangilash</label>
-                                                <input type="password" name="" id="">
+                                                <input type="password" name="">
                                             </div>
                                             <div class="medya-form-item">
                                                 <label for="">O'qtuvchi guruhlarini yangilash</label>
@@ -492,40 +493,45 @@ if ($_SESSION['login']  == 'active') { ?>
                                             </div>
                                         </div>
                                     </form>
-                                </div>
-
+                                </div> -->
                                 <div class="createItem">
                                     <p class="createItemTitle">O'qtuvchi qo'shish</p>
                                     <form action="" method="post" class="studentAddForm">
                                         <div class="formItemsStudentCreat">
                                             <label for="">Ism:</label>
-                                            <input type="text" placeholder="Ism">
+                                            <input type="text" placeholder="Ism" id="teacherName">
                                         </div>
                                         <div class="formItemsStudentCreat">
                                             <label for="">Familya:</label>
-                                            <input type="text" placeholder="Familya">
+                                            <input type="text" placeholder="Familya" id="teacherFam">
                                         </div>
                                         <div class="formItemsStudentCreat">
                                             <label for="">Telefon:</label>
-                                            <input type="text" placeholder="Telefon">
+                                            <input type="text" placeholder="Telefon" id="teacherTel">
                                         </div>
                                         <div class="formItemsStudentCreat">
                                             <label for="">Login:</label>
-                                            <input type="text" placeholder="Login">
+                                            <input type="text" placeholder="Login" id="login">
                                         </div>
                                         <div class="formItemsStudentCreat">
                                             <label for="">Parol:</label>
-                                            <input type="password" placeholder="Parol">
+                                            <input type="password" placeholder="Parol" id="parol">
                                         </div>
                                         <div class="formItemsStudentCreat">
-                                            <label for="">Guruh birlashtirilsin</label>
-                                            <select class="js-example-tokenizer form-control" multiple="multiple">
-                                                <option>2024-2025 o'quv yili 08-guruh</option>
-                                                <option>2024-2025 o'quv yili 07-guruh</option>
-                                            </select>
+                                            <button type="submit" id="addTeacher">
+                                                Saqlash
+                                            </button>
                                         </div>
                                         <div class="formItemsStudentCreat">
-                                            <button type="submit">
+                                            <label for="">Guruhni tanlang.:</label>
+                                             <select name="" id="teachersClassAddId"></select>
+                                        </div>
+                                        <div class="formItemsStudentCreat">
+                                            <label for="">O'qtuvchini tanlang.:</label>
+                                             <select name="" id="teachersClassAddId2"></select>
+                                        </div>
+                                        <div class="formItemsStudentCreat">
+                                            <button type="submit" id="classAddTeachers">
                                                 Saqlash
                                             </button>
                                         </div>
@@ -534,21 +540,7 @@ if ($_SESSION['login']  == 'active') { ?>
                                 <div class="createItem">
                                     <p class="createItemTitle">O'qtuvchilar ro'yhati</p>
                                     <input type="search" class="searchStudent" placeholder="Qidirish...">
-                                    <ul class="studentList">
-                                        <li>
-                                            <div>
-                                                <p>Boburjon Abdunazarov</p>
-                                                <span>+998976665979 08 guruh</span>
-                                                <span>Login</span>
-                                                <span>Parol</span>
-                                            </div>
-                                            <div class="studentEditDelete">
-                                                <button class="editTeacherAbout"><i
-                                                        class="fa-solid fa-pen-to-square"></i></button>
-                                                <button><i class="fa-solid fa-trash"></i></button>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                    <ul id="teachersList" class="studentList"></ul>
                                 </div>
                             </div>
                         </div>
@@ -565,26 +557,26 @@ if ($_SESSION['login']  == 'active') { ?>
                                     <ul>
                                         <li>
                                             <label for="">Ism:</label>
-                                            <input type="text">
+                                            <input id="profileIsm" type="text">
                                         </li>
                                         <li>
                                             <label for="">Familya:</label>
-                                            <input type="text">
+                                            <input id="profileFam" type="text">
                                         </li>
                                         <li>
                                             <label for="">Telefon:</label>
-                                            <input type="text">
+                                            <input id="profileTel" type="text">
                                         </li>
                                         <li>
                                             <label for="">Login:</label>
-                                            <input type="text">
+                                            <input id="profileLogin" type="text">
                                         </li>
                                         <li>
                                             <label for="">Parol:</label>
-                                            <input type="text">
+                                            <input id="profileParol" type="text">
                                         </li>
                                         <li>
-                                            <button type="submit"> Saqlash </button>
+                                            <button id="profileEditBtn" type="submit"> Saqlash </button>
                                         </li>
 
                                     </ul>
@@ -593,8 +585,6 @@ if ($_SESSION['login']  == 'active') { ?>
                         </div>
                     </div>
                 </div>
-            </div>
-
             </div>
         </section>
 

@@ -564,6 +564,9 @@ p {
   align-items: start;
   justify-content: center;
   flex-direction: column;
+  height: 550px !important;
+  overflow-y: auto;
+  padding-top: 150px;
 }
 .createStudentMain .createItem form.studentAddForm .formItemsStudentCreat {
   width: 100%;
