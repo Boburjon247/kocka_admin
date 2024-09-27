@@ -493,7 +493,6 @@ $(document).ready(function () {
 
 
     function profileEdit() {
-        $('.madalStudent').addClass('active');
         $.ajax({
             data: { id: 1 },
             type: "GET",
@@ -569,7 +568,8 @@ $(document).ready(function () {
                                 </p>
                             </div>
                             <div class="studentEditDelete">
-                                <button id="teacherDelete" value="${value.id}"><i class="fa-solid fa-trash" style="color:red"></i></button>
+                                <!-- <button class="editTeacherAbout"><i class="fa-solid fa-pen-to-square"></i></button> -->
+                                <button id="teacherDelete" value="${value.id}"><i style='color:red' class="fa-solid fa-trash"></i></button>
                             </div>
                         </li>  
                     `)

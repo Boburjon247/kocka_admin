@@ -136,6 +136,17 @@ function GetAllRow($tableName, $col,$val)
    $sql = $db->query("SELECT * FROM $tableName WHERE  $col = '$val' ORDER BY id desc");
    return getarray($sql);
 }
+
+// ixtiyoriy ustuni boyich oqib olish
+function GetAllRow2($tableName, $col1, $val1, $col2, $val2)
+{
+   $db = connection();
+   $sql = $db->query("SELECT * FROM $tableName WHERE  $col1 = '$val1' AND $col2 = '$val2' ORDER BY id desc");
+   return getarray($sql);
+}
+
+
+
 // malumotni ikkta ustuni boyicha oqib olish
 function GetAllustun($tableName, $col1,$val1,$col2,$val2)
 {

@@ -81,9 +81,9 @@ editTeacherAbout.forEach((item, index) => {
         madalOpen(madalTeacherEdit)
     });
 });
-madalTeacherEditexit.addEventListener('click', () => {
-    madalExit(madalTeacherEdit);
-});
+// madalTeacherEditexit.addEventListener('click', () => {
+//     madalExit(madalTeacherEdit);
+// });
 
 const preventDefault1 = document.querySelectorAll('.preventDefault');
 

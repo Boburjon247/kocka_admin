@@ -9,13 +9,21 @@ $db = connection();
 if ($_GET['action'] === 'login') {
     if (
         (isset($_GET['login']) && !empty($_GET['login'])) &&
-        (isset($_GET['login']) && !empty($_GET['login']))
+        (isset($_GET['password']) && !empty($_GET['password']))
     ) {
         if (GetAllustun('admin', 'login', $_GET['login'], 'parol', $_GET['password'])) {
             $_SESSION['login'] = 'active';
             echo json_encode([
                 'status' => 200,
                 'message' => "http://localhost/bekend/kocka_admin/home.php"
+            ]);
+        } else if (GetAllustun('teachers', 'login', $_GET['login'], 'parol', $_GET['password'])) {
+            $_SESSION['login'] = 'active';
+            $_SESSION['loginName'] = $_GET['login'];
+            $_SESSION['loginParol'] = $_GET['password'];
+            echo json_encode([
+                'status' => 200,
+                'message' => "http://localhost/bekend/kocka_admin/teachers.php"
             ]);
         } else {
             echo json_encode([
