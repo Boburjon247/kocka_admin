@@ -185,29 +185,6 @@ function getItemsDelet($tableName, $column, $array)
 // malumotlarni yangilash
 
 
-// madalka js
-function madalka()
-{
-?>
-   <script>
-      const NToastJS = document.querySelector('.NToastJS ');
-      const NToastJS_content = document.querySelector('.NToastJS_content');
-      if (localStorage.getItem('madaka') == 'active') {
-         NToastJS.classList.add('showAni');
-         NToastJS.classList.remove('hideAni');
-         NToastJS_content.classList.add('active');
-         setTimeout(() => {
-            NToastJS.classList.add('hideAni');
-            NToastJS.classList.remove('showAni');
-            // NToastJS_content.classList.remov('active');
-            localStorage.setItem('madaka', 'noactive');
-         }, 7500);
-
-      }
-   </script>
-<?php
-}
-
 
 // reflesh
 function reflesh($url, $res)

@@ -116,15 +116,13 @@ function fetchDataColum($action, $tableName, $col, $val)
     }
 }
 fetchDataColum('fetchDataClassReadyYearsName', 'years', 'active', 'true');
+fetchDataColum('yearsReadyTeacherPage', 'years', 'active', 'true');
 
-
-
-
-function fetchDataId($yearsName)
+function fetchDataId($action)
 {
     $db = connection();
-    if ($_GET['action'] === 'fetchDataTeachersReady') {
-        $sql = "SELECT teachers.id, teachers.ism, teachers.fam,teachers.tel,teachers.login,teachers.parol, GROUP_CONCAT(guruh.name SEPARATOR ', ') AS groups, guruh.year_name FROM guruh_idtecher_id LEFT JOIN guruh on guruh_idtecher_id.guruh_id=guruh.id LEFT JOIN teachers on guruh_idtecher_id.teacher_id=teachers.id WHERE guruh.year_name = '$yearsName' GROUP BY teachers.id";
+    if ($_GET['action'] === $action) {
+        $sql = "SELECT teachers.id, teachers.ism, teachers.fam,teachers.tel,teachers.login,teachers.parol, GROUP_CONCAT(guruh.name SEPARATOR ', ') AS groups, guruh.year_name FROM guruh_idtecher_id LEFT JOIN guruh on guruh_idtecher_id.guruh_id=guruh.id LEFT JOIN teachers on guruh_idtecher_id.teacher_id=teachers.id  GROUP BY teachers.id";
         $result = mysqli_query($db, $sql);
         $data = [];
         ksort($data);
@@ -139,7 +137,31 @@ function fetchDataId($yearsName)
         ]);
     }
 }
-fetchDataId(trim(addslashes("2024-2025 o'quv yili (kuzgi)")));
+fetchDataId('fetchDataTeachersReady');
+
+
+function fetchDataIdClass($action)
+{
+    $db = connection();
+    if ($_GET['action'] === $action) {
+        $id = $_GET['id'];
+        $sql = "SELECT guruh.name,guruh.id FROM guruh_idtecher_id LEFT JOIN guruh on guruh_idtecher_id.guruh_id=guruh.id LEFT JOIN teachers on guruh_idtecher_id.teacher_id=teachers.id WHERE teacher_id='$id' GROUP BY guruh.id";
+        $result = mysqli_query($db, $sql);
+        $data = [];
+        ksort($data);
+        while ($row = mysqli_fetch_assoc($result)) {
+            $data[] = $row;
+        }
+        mysqli_close($db);
+
+        header("Content-Type: application/json");
+        echo json_encode([
+            'data' => $data,
+        ]);
+    }
+}
+fetchDataIdClass('ClassReadyTeacherPage');
+
 
 
 // qoshish o'quv yili
@@ -379,7 +401,6 @@ if ($_GET['action'] === 'UpdateStudents') {
     }
 }
 
-
 // admin profile edit
 // yangilash
 if ($_GET['action'] === 'UpdateProfile') {
@@ -482,5 +503,97 @@ if ($_GET['action'] === 'teachersAddClass') {
             "status" => 400,
             "message" => "Iltimos ma'lumotlarni to'ldiring 😒"
         ]);
+    }
+}
+
+if ($_GET['action'] === 'studetsDataTeachers') {
+    if (!empty($_GET['className_n1']) && isset($_GET['className_n1'])) {
+        $nameClass = $_GET['className_n1'];
+        $sql = "SELECT * FROM students WHERE  guruh_name = '$nameClass'  ORDER BY id desc";
+        $result = mysqli_query($db, $sql);
+        $data = [];
+        ksort($data);
+        while ($row = mysqli_fetch_assoc($result)) {
+            $data[] = $row;
+        }
+        mysqli_close($db);
+        header("Content-Type: application/json");
+        echo json_encode([
+            'data' => $data,
+        ]);
+    }
+}
+
+
+
+
+if ($_GET['action'] === 'addTeachersStudentsData') {
+
+    if (
+        isset($_GET['teachersId']) && !empty($_GET['teachersId']) &&
+        isset($_GET['classId']) && !empty($_GET['classId']) &&
+        isset($_GET['todayDate']) && !empty($_GET['todayDate'])
+
+    ) {
+        $teachersId = $_GET['teachersId'];
+        $classId = $_GET['classId'];
+        $todayDate = $_GET['todayDate'];
+        $yearsId = $_GET['yearsId'];
+
+        $studentIdArray = explode(',', $_GET['studentIdString']);
+        $studentGreatArray = explode(',', $_GET['studentGreatString']);
+
+        $bool = 'active';
+
+        foreach ($studentIdArray as $key => $value) {
+            if (getInsert(
+                'baho',
+                ['years_id', 'oqtuvchi_id', 'guruh_id', 'student_id', 'date', 'title'],
+                [$yearsId, $teachersId, $classId, $value, $todayDate, $studentGreatArray[$key]]
+            )) {
+                $bool = 'active';
+            } else {
+                $bool = 'error';
+            }
+        }
+
+        if ($bool == 'active') {
+            echo json_encode([
+                'data' => 'active',
+            ]);
+        } else {
+            echo json_encode([
+                'data' => 'error',
+            ]);
+        }
+    }
+}
+
+
+if ($_GET['action'] === 'teacherCheck') {
+    $array = test_input(
+        [
+            $_GET['title'],
+            $_GET['todayDate'],
+            $_GET['className'],
+            $_GET['teacherId']
+        ]
+    );
+    if (GetAllustun('teacherid_active', 'data', $_GET['todayDate'], 'guhur_name', $_GET['className'])) {
+        echo json_encode([
+            "status" => 300,
+            "message" => "Ma'lumot aloqachon saqlangan"
+        ]);
+    } else {
+        if (getInsert('teacherid_active', ['title', 'data', 'guhur_name', 'teacher_id'], $array)) {
+            echo json_encode([
+                "status" => 200,
+                "message" => "Guruh ma'lumotlari ochildi."
+            ]);
+        } else {
+            echo json_encode([
+                "status" => 400,
+            ]);
+        }
     }
 }

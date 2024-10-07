@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    const url = "http://localhost/bekend/kocka_admin/server.php"
     function modal(data, situation) {
         $('.madal_main').empty();
         $('.madal_main').addClass('active')
@@ -11,10 +12,9 @@ $(document).ready(function () {
             $('.madal_main').removeClass(`${situation}`);
 
         }, 4500);
-
+        
     }
 
-    const url = "http://localhost/bekend/kocka_admin/server.php"
     // fetchData yillarni oqib olish uchun
     function fetchData() {
         $.ajax({
@@ -228,6 +228,23 @@ $(document).ready(function () {
         });
     }
 
+    function fetchDataAddYearsClassName(id, action) {
+        $.ajax({
+            url: `${url}?action=${action}`,
+            type: "GET",
+            dataType: "json",
+            success: function (response) {
+                let data = response.data;
+                $(id).empty();
+                $.each(data, function (index, value) {
+                    $(id).append(`
+                        <option value="${value.name}">${value.name}</option>
+                    `)
+                });
+            }
+        });
+    }
+
     function fetchDataAddYearsTeachers(id, action) {
         $.ajax({
             url: `${url}?action=${action}`,
@@ -249,7 +266,7 @@ $(document).ready(function () {
 
     $('.addClassModalActiveJq').on('click', () => {
         fetchDataAddYearsClass('#addClassReady', 'fetchDataClassReadyYearsName');
-        fetchDataAddYearsClass('#studentSelect', 'fetchDataClassName');
+        fetchDataAddYearsClassName('#studentSelect', 'fetchDataClassName');
     });
 
     // yangi guruh qoshihs uchun
@@ -416,7 +433,7 @@ $(document).ready(function () {
                 tel: $('#studentTel').val(),
                 uy_tel: $('#studentTelUy').val(),
                 guruh_name: $('#studentSelect').val(),
-            },
+            }, 
             url: `${url}?action=studentsClassName`,
             type: "GET",
             success: function (data) {
@@ -436,7 +453,7 @@ $(document).ready(function () {
         });
     });
 
-    fetchDataAddYearsClass('#studentSelect', 'fetchDataClassName');
+    fetchDataAddYearsClassName('#studentSelect', 'fetchDataClassName');
     fetchDataAddYearsClass('#teachersClassAddId', 'fetchDataTeachersName');
 
     // malumotni ozgartirish uchun oqib olish
@@ -454,7 +471,7 @@ $(document).ready(function () {
                 $('#sFam').val(classReadyData.fam);
                 $('#sTel').val(classReadyData.tel);
                 $('#sUyTel').val(classReadyData.uy_tel);
-                fetchDataAddYearsClass('#studentDataEditClass', 'fetchDataStudentClassReadyName');
+                fetchDataAddYearsClassName('#studentDataEditClass', 'fetchDataStudentClassReadyName');
             }
         })
 
@@ -667,31 +684,4 @@ $(document).ready(function () {
             }
         });
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 });

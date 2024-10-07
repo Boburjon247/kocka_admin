@@ -27,67 +27,54 @@ if ($_SESSION['login']  == 'active') { ?>
     <body>
 
         <div class="container-fluid teachers">
+            <div class="madal_main"></div>
             <div class="navbar">
                 <?php foreach (GetAllRow2('teachers', 'login', $_SESSION['loginName'], 'parol', $_SESSION['loginParol']) as $key => $val) : ?>
+                    <input type="hidden" id="teacherIdPage" value="<?= $val['id'] ?>">
                     <div class="logoNavbar">
                         <img src="img/logo.png" alt="">
                         <p class="logoNavbarText">O'qtuvchi</p>
                     </div>
                     <div class="navbarTitle">
-                        <p><?= $val['ism']?></p>
+                        <p><?= $val['ism'] ?></p>
                         <i class="fa-solid fa-user"></i>
                     </div>
                 <?php endforeach; ?>
             </div>
-            <div class="container">
-                <div class="control-form">
-                    <form action="" class="control-form-add" method="post">
-                        <div class="control-form-add-from">
-                            <select name="" id="">
-                                <option value="">O'quv yilini tanlang</option>
-                                <option value="">2024-2025 o'quv yili</option>
-                            </select>
-                            <select name="" id="">
-                                <option value="">Guruhni tanlang</option>
-                                <option value="">2024-2025 08-guruh</option>
-                            </select>
-                            <input type="date">
+                <div class="container">
+                    <div class="control-form">
+                        <form action="" class="control-form-add" method="post">
+                            <div class="control-form-add-from">
+                                <select name="" id="teacherPageYearsId"></select>
+                                <select name="" id="teacherPageClassId"></select>
+                                <input type="date" id="todayDateJs">
+                            </div>
+                            <button id="teacherTableAddData" type="submit" class="teacherControlButton teacherControlButton2">Saqlash</button>
+                        </form>
+                        <div class="teacher-madal active">
+                            <img src="img/nodatafound.png" alt="">
                         </div>
-                        <button type="submit" class="teacherControlButton">Saqlash</button>
-                    </form>
-                    <div class="teacher-madal">
-                        <img src="img/nodatafound.png" alt="">
+                        <form class="information-students hide" action="">
+                            <ul id="teacherPageDataStudentsItems"></ul>
+                            <div class="studentSeve">
+                                <button type="submit" id="addTeachersStudentsData">
+                                    Saqlash
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                    <form class="information-students" action="">
-                        <ul>
-                            <li class="information-students-items">
-                                <p>№</p>
-                                <p>FISH</p>
-                                <p>Active</p>
-                            </li>
-                            <li>
-                                <p>1</p>
-                                <p>Abdunazarov Boburon</p>
-                                <p>
-                                    <input maxlength="1" type="text" oninput="this.value = this.value.replace(/[^2s]/g, '');" />
-                                </p>
-                            </li>
-                        </ul>
-                        <div class="studentSeve">
-                            <button type="submit">
-                                Saqlash
-                            </button>
-                        </div>
-                    </form>
                 </div>
-            </div>
         </div>
 
 
         <!-- bootstrap@5.3.3 -->
+        <script src="js/Jquery/jquery-3.6.4.min.js"></script>
+        <script src="js/Jquery/owlCarusel/owl.carousel.min.js"></script>
+        <script src="js/Jquery/jquery-ui.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
+        <script src="js/teachers.js"></script>
     </body>
 
     </html>
