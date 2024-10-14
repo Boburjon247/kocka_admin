@@ -16,7 +16,7 @@ function hideTab(params) {
 function showTab(index) {
     homeMineBlokItem[index].classList.add('active');
     mainItems[index].classList.add('active');
-    // loading[index].classList.add('active');
+    loading[index].classList.add('active');
 }
 hideTab();
 showTab(0)
@@ -92,3 +92,16 @@ preventDefault1.forEach(item =>{
         e.preventDefault();
     })
 });
+
+const mainAboutItems = document.querySelectorAll('.main-about-items');
+mainAboutItems.forEach((element, index) =>{
+    element.addEventListener('click', ()=>{
+        hideTab();
+        showTab(index+1)
+        localStorage.setItem('blok-item', index+1);
+    });
+    if (parseInt(localStorage.getItem('blok-item')) == `${index+1}`) {
+        hideTab();
+        showTab(index+1);
+    }
+})

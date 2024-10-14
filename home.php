@@ -94,9 +94,9 @@ if ($_SESSION['login']  == 'active') { ?>
                     <div class="main-right-blok">
                         <!-- Bosh sahifa -->
                         <div class="home-mine-blok-item">
-                            <!-- <div class="loading">
-                            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"></div>
-                        </div> -->
+                            <div class="loading">
+                                <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"></div>
+                            </div>
                             <div class="main">
                                 <div class="box">
                                     <p class="topTitle">Koica Yo'qlama / <span>Bosh Sahifa</span></p>
@@ -105,11 +105,24 @@ if ($_SESSION['login']  == 'active') { ?>
                                     <div class="main-techers-students">
                                         <div class="items_box">
                                             <i class="fa-solid fa-chalkboard-user"></i>
-                                            <p>O'qtuvchilar 70</p>
+                                            <?php $arrayTeacher = []; ?>
+                                            <?php foreach (GetAll('teachers', 'false', 'desc') as $key => $val) : ?>
+                                                <?php
+                                                array_push($arrayTeacher, $key);
+                                                ?>
+                                            <?php endforeach; ?>
+
+                                            <p>O'qtuvchilar <?= count($arrayTeacher) ?></p>
                                         </div>
                                         <div class="items_box">
+                                            <?php $arrayStudent = []; ?>
+                                            <?php foreach (GetAll('students', 'false', 'desc') as $key => $val) : ?>
+                                                <?php
+                                                array_push($arrayStudent, $key);
+                                                ?>
+                                            <?php endforeach; ?>
                                             <i class="fa-solid fa-graduation-cap"></i>
-                                            <p>O'quvchilar 5</p>
+                                            <p>O'quvchilar <?= count($arrayStudent) ?></p>
                                         </div>
                                     </div>
                                     <div class="main-about">
@@ -151,64 +164,31 @@ if ($_SESSION['login']  == 'active') { ?>
                                 <div class="box newYers-yaratish">
                                     <p class="topTitle">Koica Yo'qlama / <span>Statistika</span></p>
                                 </div>
-
                                 <div class="chat">
                                     <div class="topBarChatInput">
                                         <form action="" class="topBarChatInputForm" method="post">
                                             <div class="topBarChatInputFormItems">
-                                                <select name="" id="">
-                                                    <option value="">2024-2025 yili</option>
-                                                </select>
-                                                <select name="" id="">
-                                                    <option value="">08 - guruh</option>
-                                                </select>
-                                                <input type="date" name="" id="">
+                                                <select name="" id="classStatistikaData"></select>
+                                                <input type="date" name="" id="dateStatistikaData">
                                             </div>
-                                            <button type="submit">Saqlash</button>
+                                            <button id="statistikAdd" type="submit">Saqlash</button>
                                         </form>
                                     </div>
                                     <div class="topBarChatInformation">
-                                        <div class="madalChatInformatio ">
+                                        <div class="madalChatInformatio active">
                                             <img src="img/vCIO-Consulting.png" alt="">
                                         </div>
-                                        <div class="madalChatStudentInformation  active">
+                                        <div class="madalChatStudentInformation">
                                             <div class="madalChatStudentInformationBtn">
                                                 <form action="" method="post">
-                                                    <button type="submit">Saqlash</button>
-                                                    <button type="submit">
+                                                    <button type="submit">Ummumiy malumotni olish</button>
+                                                    <button id="exelgaexport" type="submit">
                                                         <img src="img/326afb_b88705c4a11740c984b904c6b1b5a763_mv2_d_1600_1600_s_2.png"
                                                             alt="">
                                                         <span>Yuklab olish</span>
                                                     </button>
                                                 </form>
-                                                <ul>
-                                                    <li class="firstUser">
-                                                        <p>№</p>
-                                                        <p>Fish</p>
-                                                        <p>1-para <span>Bobur</span></p>
-                                                        <p>2-para <span>Nodirbek</span></p>
-                                                        <p>3-para <span>Shoxjaxon</span></p>
-                                                        <p>4-para <span>Lazizbek</span></p>
-                                                        <p>Ummumiy</p>
-                                                    </li>
-                                                    <li>
-                                                        <p>1</p>
-                                                        <p class="studentNmae">Abdunazarov Boburjon</p>
-                                                        <p>
-                                                            <input maxlength="1" type="text" value="0" name="" id="">
-                                                        </p>
-                                                        <p>
-                                                            <input type="text" value="0" name="" id="">
-                                                        </p>
-                                                        <p>
-                                                            <input type="text" value="0" name="" id="">
-                                                        </p>
-                                                        <p>
-                                                            <input type="text" value="0" name="" id="">
-                                                        </p>
-                                                        <p>0</p>
-                                                    </li>
-                                                </ul>
+                                                <ul id="statisticDataAll"></ul>
                                             </div>
                                         </div>
                                     </div>
@@ -217,42 +197,15 @@ if ($_SESSION['login']  == 'active') { ?>
                                         <form action="" class="chatStatisticInformation">
                                             <div class="searchTeacher">
                                                 <div class="">
-                                                    <button class="btnTeacherChat" type="submit"><i
+                                                    <button id="prevDate" class="btnTeacherChat" type="submit"><i
                                                             class="fa-solid fa-angle-left"></i></button>
-                                                    <button class="btnTeacherChat" type="submit"><i
+                                                    <button id="nextDate" class="btnTeacherChat" type="submit"><i
                                                             class="fa-solid fa-angle-right"></i></button>
 
                                                 </div>
-                                                <p>2024/09/12</p>
+                                                <p id="todayId"></p>
                                             </div>
-                                            <ul>
-                                                <li class="chatStatisticInformationItems">
-                                                    <p>№</p>
-                                                    <p>FISH</p>
-                                                    <p>Activligi</p>
-                                                </li>
-                                                <li>
-                                                    <p>1</p>
-                                                    <p class="itemsChat">Lazizbek</p>
-                                                    <p>0</p>
-                                                </li>
-                                                <li>
-                                                    <p>2</p>
-                                                    <p class="itemsChat">Shoxjahon</p>
-                                                    <p>0</p>
-                                                </li>
-                                                <li>
-                                                    <p>3</p>
-                                                    <p class="itemsChat">Nodirbek</p>
-                                                    <p>0</p>
-                                                </li>
-                                                <li>
-                                                    <p>4</p>
-                                                    <p class="itemsChat">Bobur</p>
-                                                    <p>0</p>
-                                                </li>
-
-                                            </ul>
+                                            <ul id="teacherListActive"></ul>
                                         </form>
                                     </div>
                                 </div>
@@ -262,7 +215,7 @@ if ($_SESSION['login']  == 'active') { ?>
                         </div>
                         <!-- oquv yili -->
                         <div class="home-mine-blok-item">
-                            <div class="loading ">
+                            <div class="loading  active">
                                 <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"></div>
                             </div>
                             <div class="main">
@@ -524,11 +477,11 @@ if ($_SESSION['login']  == 'active') { ?>
                                         </div>
                                         <div class="formItemsStudentCreat">
                                             <label for="">Guruhni tanlang.:</label>
-                                             <select name="" id="teachersClassAddId"></select>
+                                            <select name="" id="teachersClassAddId"></select>
                                         </div>
                                         <div class="formItemsStudentCreat">
                                             <label for="">O'qtuvchini tanlang.:</label>
-                                             <select name="" id="teachersClassAddId2"></select>
+                                            <select name="" id="teachersClassAddId2"></select>
                                         </div>
                                         <div class="formItemsStudentCreat">
                                             <button type="submit" id="classAddTeachers">
@@ -592,6 +545,7 @@ if ($_SESSION['login']  == 'active') { ?>
         <script src="js/Jquery/jquery-3.6.4.min.js"></script>
         <script src="js/Jquery/owlCarusel/owl.carousel.min.js"></script>
         <script src="js/Jquery/jquery-ui.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
         <script src="js/javascript.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
             integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="

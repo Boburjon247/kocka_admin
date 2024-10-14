@@ -47,6 +47,12 @@ if ($_SESSION['login']  == 'active') { ?>
                             <div class="control-form-add-from">
                                 <select name="" id="teacherPageYearsId"></select>
                                 <select name="" id="teacherPageClassId"></select>
+                                <select name="" id="teacherPageLessonId">
+                                    <option value="1-dars-juftligi">1 - dars juftligi</option>
+                                    <option value="2-dars-juftligi">2 - dars juftligi</option>
+                                    <option value="3-dars-juftligi">3 - dars juftligi</option>
+                                    <option value="4-dars-juftligi">4 - dars juftligi</option>
+                                </select>
                                 <input type="date" id="todayDateJs">
                             </div>
                             <button id="teacherTableAddData" type="submit" class="teacherControlButton teacherControlButton2">Saqlash</button>

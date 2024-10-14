@@ -156,6 +156,16 @@ function GetAllustun($tableName, $col1,$val1,$col2,$val2)
    if($auth > 0) return true;
    else return false;
 }
+
+function GetAllustun3($tableName, $col1,$val1,$col2,$val2, $col3,$val3)
+{
+   $db = connection();
+   $sql = $db->query("SELECT * FROM $tableName WHERE  $col1 = '$val1' AND $col2 = '$val2' AND $col3 = '$val3'");
+   $auth = $sql -> num_rows;
+   if($auth > 0) return true;
+   else return false;
+}
+
 // limit boyicha chiqaradi
 function GetAllRowLimit($tableName, $limit)
 {

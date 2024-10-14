@@ -61,14 +61,17 @@ $(document).ready(function () {
 
     fetchDataAddClass('#teacherPageClassId', 'ClassReadyTeacherPage');
 
+    
 
     $('#teacherTableAddData').on('click', (e) => {
         e.preventDefault();
+        
 
         const todayDate = new Date();
         const sanaFormat = todayDate.getFullYear() + "-" +
             ("0" + (todayDate.getMonth() + 1)).slice(-2) + "-" +
             ("0" + todayDate.getDate()).slice(-2);
+
         if (sanaFormat == $('#todayDateJs').val()) {
             $.ajax({
                 url: `${url}?action=studetsDataTeachers`,
@@ -120,7 +123,6 @@ $(document).ready(function () {
                 }
             })
 
-
             $.ajax({
                 url: `${url}?action=teacherCheck`,
                 data: {
@@ -128,6 +130,7 @@ $(document).ready(function () {
                     todayDate: sanaFormat,
                     className: $('#teacherPageClassId').val(),
                     teacherId: $('#teacherIdPage').val(),
+                    lessonId:$('#teacherPageLessonId').val()
                 },
                 type: "GET",
                 dataType: "json",
@@ -136,7 +139,6 @@ $(document).ready(function () {
                         $('.teacher-madal').addClass('active');
                         $('.information-students').addClass('hide');
                         modal(response.message, 'error');
-
                     }
                     else if (response.status == 200) {
                         $('.teacher-madal').removeClass('active');
@@ -158,7 +160,7 @@ $(document).ready(function () {
 
     $('#addTeachersStudentsData').on('click', (e) => {
         e.preventDefault();
-
+        
         studentIdArray = [];
         studentGreatArray = [];
 
@@ -179,8 +181,10 @@ $(document).ready(function () {
                 teachersId: $('#teacherIdPage').val(),
                 classId: $('#teacherPageClassId option:selected').attr('name'),
                 todayDate: $('#todayDateJs').val(),
-                studentIdString: studentIdArray.join(', '),
-                studentGreatString: studentGreatArray.join(', '),
+                studentIdString: studentIdArray.join(','),
+                studentGreatString: studentGreatArray.join(','),
+                lessonId:$('#teacherPageLessonId').val()
+
             },
             type: "GET",
             dataType: "json",

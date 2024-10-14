@@ -12,7 +12,7 @@ $(document).ready(function () {
             $('.madal_main').removeClass(`${situation}`);
 
         }, 4500);
-        
+
     }
 
     // fetchData yillarni oqib olish uchun
@@ -49,8 +49,8 @@ $(document).ready(function () {
     $('.newYersid').on('click', '#yearsActive', (e) => {
         $target = e.target.checked;
         $id = e.target.value;
-        
-        
+
+
         e.preventDefault();
         $.ajax({
             url: `${url}?action=UpdateYearsTarget`,
@@ -81,7 +81,7 @@ $(document).ready(function () {
         $.ajax({
             data: {
                 name: $('#yearsAddInput').val(),
-                active:'false',
+                active: 'false',
             },
             url: `${url}?action=insertYears`,
             type: "GET",
@@ -228,6 +228,10 @@ $(document).ready(function () {
         });
     }
 
+    fetchDataAddYearsClass('#classStatistikaData', 'fetchDataClassNameStatistik');
+
+
+
     function fetchDataAddYearsClassName(id, action) {
         $.ajax({
             url: `${url}?action=${action}`,
@@ -262,7 +266,6 @@ $(document).ready(function () {
         });
     }
     fetchDataAddYearsTeachers('#teachersClassAddId2', 'fetchDataClassName2');
-
 
     $('.addClassModalActiveJq').on('click', () => {
         fetchDataAddYearsClass('#addClassReady', 'fetchDataClassReadyYearsName');
@@ -433,7 +436,7 @@ $(document).ready(function () {
                 tel: $('#studentTel').val(),
                 uy_tel: $('#studentTelUy').val(),
                 guruh_name: $('#studentSelect').val(),
-            }, 
+            },
             url: `${url}?action=studentsClassName`,
             type: "GET",
             success: function (data) {
@@ -454,6 +457,9 @@ $(document).ready(function () {
     });
 
     fetchDataAddYearsClassName('#studentSelect', 'fetchDataClassName');
+
+
+
     fetchDataAddYearsClass('#teachersClassAddId', 'fetchDataTeachersName');
 
     // malumotni ozgartirish uchun oqib olish
@@ -556,9 +562,9 @@ $(document).ready(function () {
         });
     });
 
-    
-    
-    
+
+
+
     // oqtuvchilar bilan ishlash
 
     // oqib olish uchun
@@ -634,7 +640,7 @@ $(document).ready(function () {
 
     //o'qtuvchini o'chirish
     $('#teachersList').on('click', '#teacherDelete', (e) => {
-        id = e.currentTarget.attributes.value.value;                
+        id = e.currentTarget.attributes.value.value;
         $.ajax({
             data: { id: id, },
             type: "GET",
@@ -650,16 +656,16 @@ $(document).ready(function () {
                 }
             }
         })
-    
+
     });
 
     // oqtuvchini guruhga biriktrish 
-    $('#classAddTeachers').on('click',(e)=>{
-        e.preventDefault();        
+    $('#classAddTeachers').on('click', (e) => {
+        e.preventDefault();
         $.ajax({
             data: {
-                guruhId:$('#teachersClassAddId').val(),
-                teachersId:$('#teachersClassAddId2').val(),
+                guruhId: $('#teachersClassAddId').val(),
+                teachersId: $('#teachersClassAddId2').val(),
             },
             url: `${url}?action=teachersAddClass`,
             type: "GET",
@@ -684,4 +690,246 @@ $(document).ready(function () {
             }
         });
     });
+
+
+
+    //Statistika
+
+
+    const result = {};
+    $('#statistikAdd').on('click', (e) => {
+        e.preventDefault();
+        for (var key in result) {
+            if (result.hasOwnProperty(key)) {
+                delete result[key];
+            }
+        }
+        $.ajax({
+            data: {
+                classId: $('#classStatistikaData').val(),
+                date: $('#dateStatistikaData').val(),
+            },
+            type: "GET",
+            url: `${url}?action=StatistikData`,
+            dataType: "json",
+            success: function (response) {
+                response.data.forEach((element) => {
+                    const list = result[element.id]?.list || [];
+                    list.push({
+                        lesson: element.lesson,
+                        title: element.title,
+                        teacher_ism: element.teacher_ism
+                    });
+                    result[element.id] = {
+                        id: element.id,
+                        talaba_ism: element.talaba_ismi,
+                        talaba_fam: element.talaba_fam,
+                        guruh_name: element.guruh_name,
+                        date: element.date,
+                        list: list
+                    };
+                });
+
+
+                if (Object.keys(result).length != 0) {
+                    $('.madalChatInformatio').removeClass('active');
+                    $('.madalChatStudentInformation').addClass('active');
+                    $('#statisticDataAll').empty();
+                    Object.keys(result).forEach((key, index) => {
+                        teacherName = result[key].list[0] && result[key].list[0].teacher_ism ? result[key].list[0].teacher_ism : 'none'
+                        teacherName1 = result[key].list[1] && result[key].list[1].teacher_ism ? result[key].list[1].teacher_ism : 'none'
+                        teacherName2 = result[key].list[2] && result[key].list[2].teacher_ism ? result[key].list[2].teacher_ism : 'none'
+                        teacherName3 = result[key].list[3] && result[key].list[3].teacher_ism ? result[key].list[3].teacher_ism : 'none'
+                    })
+
+
+
+                    $('#statisticDataAll').append(`
+                            <li class="firstUser">
+                                <p>№</p>
+                                <p>Fish</p>
+                                <p>1-para <span>${teacherName}</span></p>
+                                <p>2-para <span>${teacherName1}</span></p>
+                                <p>3-para <span>${teacherName2}</span></p>
+                                <p>4-para <span>${teacherName3}</span></p>
+                                <p>Kun davomida</p>
+                            </li>
+                    `);
+
+
+
+                    Object.keys(result).forEach((key, index) => {
+                        let count = 0, countString = 0;
+                        result[key].list.forEach(item => {
+                            if (item.title === "2" || item.title === " 2") {
+                                count++; // Agar title "2" bo'lsa, hisoblagichni oshirish
+                            }
+                            else if (item.title === 's' || item.title === ' s') {
+                                countString++
+                            }
+                        });
+
+                        $('#statisticDataAll').append(`
+                            
+                            <li>
+                                <p>${index + 1}</p>
+                                <p class="studetName">${result[key].talaba_fam} ${result[key].talaba_ism}</p>
+                                <p>${result[key].list[0] && result[key].list[0].title ? result[key].list[0].title : 'none'}</p>
+                                <p>${result[key].list[1] && result[key].list[1].title ? result[key].list[1].title : 'none'}</p>
+                                <p>${result[key].list[2] && result[key].list[2].title ? result[key].list[2].title : 'none'}</p>
+                                <p>${result[key].list[3] && result[key].list[3].title ? result[key].list[3].title : 'none'}</p>
+                                <p> 
+                                    <span style="color:red;font-weight: bold;">${count * 2}</span>/
+                                    <span style="color:lime;font-weight: bold;">${countString * 2}</span>
+                                </p>
+                            </li>
+                        `);
+                    });
+                }
+                else {
+                    $('.madalChatInformatio').addClass('active');
+                    $('.madalChatStudentInformation').removeClass('active');
+                    modal("Ma'lumot topilmadi🤨", 'error')
+                }
+
+
+
+            }
+        })
+
+    });
+
+
+
+    $('#exelgaexport').on('click', (e) => {
+        e.preventDefault();
+        // Excel jadvalini yaratish
+        var ws_data = [
+            ["Guruh:", result["21"].guruh_name], // Guruh nomi
+            ["Sana:", result["21"].date],        // Sana
+            ["ID", "Ism Familiya", "1-para", "2-para", "3-para", "4-para"] // Ustunlar sarlavhasi
+        ];
+
+        // Har bir talabaning ma'lumotlarini jadvalga qo'shish
+        Object.keys(result).forEach(function (key) {
+            var student = result[key];
+            var row = [
+                student.id,
+                student.talaba_ism + " " + student.talaba_fam, // Ism va familiya birlashtiriladi
+                (student.list[0] && student.list[0].title.trim() === "") ? "" : (student.list[0] ? student.list[0].title.trim() : "none"), // 1-para
+                (student.list[1] && student.list[1].title.trim() === "") ? "" : (student.list[1] ? student.list[1].title.trim() : "none"), // 2-para
+                (student.list[2] && student.list[2].title.trim() === "") ? "" : (student.list[2] ? student.list[2].title.trim() : "none"), // 3-para
+                (student.list[3] && student.list[3].title.trim() === "") ? "" : (student.list[3] ? student.list[3].title.trim() : "none")  // 4-para
+            ];
+
+            // Agar barcha para ma'lumotlari bo'sh bo'lsa, barcha ustunlar 'none' bo'lsin
+            if (row[2] === "none" && row[3] === "none" && row[4] === "none" && row[5] === "none") {
+                row[2] = "none";
+                row[3] = "none";
+                row[4] = "none";
+                row[5] = "none";
+            }
+
+            ws_data.push(row);
+        });
+
+        // Excel jadvalini yaratish
+        var ws = XLSX.utils.aoa_to_sheet(ws_data);
+
+        // Ustunlarni birlashtirish (ixtiyoriy)
+        ws['!merges'] = [
+            { s: { r: 0, c: 0 }, e: { r: 0, c: 5 } }, // Guruh nomi ustunlarni birlashtirish
+            { s: { r: 1, c: 0 }, e: { r: 1, c: 5 } }  // Sana ustunlarni birlashtirish
+        ];
+
+        // Ustun kengliklari (ixtiyoriy)
+        ws['!cols'] = [
+            { wch: 5 },    // ID
+            { wch: 20 },   // Ism Familiya
+            { wch: 10 },   // 1-para
+            { wch: 10 },   // 2-para
+            { wch: 10 },   // 3-para
+            { wch: 10 }    // 4-para
+        ];
+
+        // Yangi Excel kitobi yaratish
+        var wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "O'quvchilar");
+
+        // Excel faylni yuklab olish
+        XLSX.writeFile(wb, "oqtuvchi_hisoboti.xlsx");
+
+    });
+
+
+
+    // Bugungi sanani olish
+    const today = new Date();
+    const currentDate = today;
+
+    // Sanani ko'rsatish
+    function updateDateDisplay() {
+        const day = currentDate.getDate();
+        const month = currentDate.getMonth() + 1; // JavaScriptda oylar 0 dan boshlanadi
+        const year = currentDate.getFullYear();
+        const formattedDate = year + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
+        $('#todayId').text(formattedDate);
+    }
+
+    // Sanani yangilash
+    updateDateDisplay();
+
+    function fetchDataTeachersActive(date) {
+        $.ajax({
+            url: `${url}?action=fetchDataTeachersReadyActive`,
+            type: "GET",
+            dataType: "json",
+            data: {
+                todayDate: date
+            },
+            success: function (response) {
+                let dataTeacherActive = response.data;
+
+                $('#teacherListActive').empty();
+                $('#teacherListActive').append(`
+                            <li class="chatStatisticInformationItems">
+                                <p>№</p>
+                                <p>FISH</p>
+                                <p>Activligi</p>
+                            </li>
+                        `);
+                $.each(dataTeacherActive, function (index, value) {
+                    $('#teacherListActive').append(`
+                            <li>
+                                <p>${index+1}</p>
+                                <p class="itemsChat">${value.ism} ${value.fam}</p>
+                                <p>${value.title_count*2}</p>
+                            </li>
+                    `)
+                });
+
+            }
+        });
+    }
+    fetchDataTeachersActive('2024-10-14')
+    
+
+
+    // Tugmalarni bosish funksiyalari
+    $('#prevDate').click(function (e) {
+        e.preventDefault();
+        currentDate.setDate(currentDate.getDate() - 1); // Orqaga bir kun o'tkazish
+        updateDateDisplay();
+        fetchDataTeachersActive($('#todayId').text())
+    });
+
+    $('#nextDate').click(function (e) {
+        e.preventDefault();
+        currentDate.setDate(currentDate.getDate() + 1); // Oldinga bir kun o'tkazish
+        updateDateDisplay();
+        fetchDataTeachersActive($('#todayId').text())
+    });
+
+
+
 });

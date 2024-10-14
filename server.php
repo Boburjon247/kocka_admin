@@ -88,7 +88,13 @@ function fetchData($tableName, $action)
 
 fetchData('years', 'fetchDataYearsReady');
 fetchData('guruh', 'fetchDataClassReady');
+
 fetchData('guruh', 'fetchDataClassName');
+
+fetchData('guruh', 'fetchDataClassNameStatistik');
+
+
+
 fetchData('teachers', 'fetchDataClassName2');
 fetchData('guruh', 'fetchDataTeachersName');
 fetchData('students', 'fetchDataStudentsReady');
@@ -116,7 +122,9 @@ function fetchDataColum($action, $tableName, $col, $val)
     }
 }
 fetchDataColum('fetchDataClassReadyYearsName', 'years', 'active', 'true');
+
 fetchDataColum('yearsReadyTeacherPage', 'years', 'active', 'true');
+
 
 function fetchDataId($action)
 {
@@ -539,6 +547,7 @@ if ($_GET['action'] === 'addTeachersStudentsData') {
         $classId = $_GET['classId'];
         $todayDate = $_GET['todayDate'];
         $yearsId = $_GET['yearsId'];
+        $lesson = $_GET['lessonId'];
 
         $studentIdArray = explode(',', $_GET['studentIdString']);
         $studentGreatArray = explode(',', $_GET['studentGreatString']);
@@ -548,8 +557,8 @@ if ($_GET['action'] === 'addTeachersStudentsData') {
         foreach ($studentIdArray as $key => $value) {
             if (getInsert(
                 'baho',
-                ['years_id', 'oqtuvchi_id', 'guruh_id', 'student_id', 'date', 'title'],
-                [$yearsId, $teachersId, $classId, $value, $todayDate, $studentGreatArray[$key]]
+                ['years_id', 'oqtuvchi_id', 'guruh_id', 'student_id', 'date', 'title', 'lesson'],
+                [$yearsId, $teachersId, $classId, $value, $todayDate, $studentGreatArray[$key], $lesson]
             )) {
                 $bool = 'active';
             } else {
@@ -576,16 +585,17 @@ if ($_GET['action'] === 'teacherCheck') {
             $_GET['title'],
             $_GET['todayDate'],
             $_GET['className'],
-            $_GET['teacherId']
+            $_GET['teacherId'],
+            $_GET['lessonId'],
         ]
     );
-    if (GetAllustun('teacherid_active', 'data', $_GET['todayDate'], 'guhur_name', $_GET['className'])) {
+    if (GetAllustun3('teacherid_active', 'data', $_GET['todayDate'], 'guhur_name', $_GET['className'], 'lesson', $_GET['lessonId'])) {
         echo json_encode([
             "status" => 300,
             "message" => "Ma'lumot aloqachon saqlangan"
         ]);
     } else {
-        if (getInsert('teacherid_active', ['title', 'data', 'guhur_name', 'teacher_id'], $array)) {
+        if (getInsert('teacherid_active', ['title', 'data', 'guhur_name', 'teacher_id', 'lesson'], $array)) {
             echo json_encode([
                 "status" => 200,
                 "message" => "Guruh ma'lumotlari ochildi."
@@ -596,4 +606,58 @@ if ($_GET['action'] === 'teacherCheck') {
             ]);
         }
     }
+}
+
+
+
+// statistika
+
+function fetchDataIdStatistik($action, $yearsName, $classId, $date) {}
+
+if ($_GET['action'] === 'StatistikData') {
+
+    $array = test_input(
+        [
+            $_GET['classId'],
+            $_GET['date']
+        ]
+    );
+    $db = connection();
+    $sql = "SELECT students.id, guruh.name AS guruh_name, teachers.ism AS teacher_ism, students.ism AS talaba_ismi, students.fam AS talaba_fam, baho.lesson, baho.title, baho.date FROM baho LEFT JOIN students on baho.student_id=students.id LEFT JOIN guruh on baho.guruh_id=guruh.id LEFT JOIN teachers on baho.oqtuvchi_id=teachers.id WHERE baho.guruh_id = '$array[0]' AND baho.date='$array[1]'";
+    $result = mysqli_query($db, $sql);
+    $data = [];
+    ksort($data);
+    while ($row = mysqli_fetch_assoc($result)) {
+        $data[] = $row;
+    }
+    mysqli_close($db);
+
+    header("Content-Type: application/json");
+    echo json_encode([
+        'data' => $data,
+    ]);
+}
+
+
+if ($_GET['action'] === 'fetchDataTeachersReadyActive') {
+
+    $array = test_input(
+        [
+            $_GET['todayDate'],
+        ]
+    );
+    $db = connection();
+    $sql = "SELECT teachers.ism, teachers.fam, COUNT(title) AS title_count FROM teacherid_active JOIN teachers ON teacherid_active.teacher_id = teachers.id WHERE data = '$array[0]' GROUP BY teachers.id";
+    $result = mysqli_query($db, $sql);
+    $data = [];
+    ksort($data);
+    while ($row = mysqli_fetch_assoc($result)) {
+        $data[] = $row;
+    }
+    mysqli_close($db);
+
+    header("Content-Type: application/json");
+    echo json_encode([
+        'data' => $data,
+    ]);
 }
