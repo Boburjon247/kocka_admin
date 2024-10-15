@@ -268,7 +268,7 @@ $(document).ready(function () {
     fetchDataAddYearsTeachers('#teachersClassAddId2', 'fetchDataClassName2');
 
     $('.addClassModalActiveJq').on('click', () => {
-        fetchDataAddYearsClass('#addClassReady', 'fetchDataClassReadyYearsName');
+        fetchDataAddYearsClassName('#addClassReady', 'fetchDataClassReadyYearsName');
         fetchDataAddYearsClassName('#studentSelect', 'fetchDataClassName');
     });
 
@@ -335,7 +335,7 @@ $(document).ready(function () {
             success: function (response) {
                 let classReadyData = response.data;
                 $('#classNameEditInput').val(classReadyData.name);
-                fetchDataAddYearsClass('#classNameEditSelect', 'fetchDataClassReadyYearsName');
+                fetchDataAddYearsClassName('#classNameEditSelect', 'fetchDataClassReadyYearsName');
             }
         })
 
@@ -442,7 +442,12 @@ $(document).ready(function () {
             success: function (data) {
                 let studentsData = JSON.parse(data);
                 if (studentsData.status == 200) {
-                    fetchDataStudents();
+                        $('#studentName').val(''),
+                        $('#studentFam').val(''),
+                        $('#studentTel').val(''),
+                        $('#studentTelUy').val(''),
+                        $('#studentSelect').val(''),
+                        fetchDataStudents();
                     modal(studentsData.message, 'success');
                 }
                 else if (studentsData.status == 500) {
@@ -774,10 +779,10 @@ $(document).ready(function () {
                             <li>
                                 <p>${index + 1}</p>
                                 <p class="studetName">${result[key].talaba_fam} ${result[key].talaba_ism}</p>
-                                <p>${result[key].list[0] && result[key].list[0].title ? result[key].list[0].title : 'none'}</p>
-                                <p>${result[key].list[1] && result[key].list[1].title ? result[key].list[1].title : 'none'}</p>
-                                <p>${result[key].list[2] && result[key].list[2].title ? result[key].list[2].title : 'none'}</p>
-                                <p>${result[key].list[3] && result[key].list[3].title ? result[key].list[3].title : 'none'}</p>
+                                <p>${result[key].list[0] && result[key].list[0].title ? result[key].list[0].title : ''}</p>
+                                <p>${result[key].list[1] && result[key].list[1].title ? result[key].list[1].title : ''}</p>
+                                <p>${result[key].list[2] && result[key].list[2].title ? result[key].list[2].title : ''}</p>
+                                <p>${result[key].list[3] && result[key].list[3].title ? result[key].list[3].title : ''}</p>
                                 <p> 
                                     <span style="color:red;font-weight: bold;">${count * 2}</span>/
                                     <span style="color:lime;font-weight: bold;">${countString * 2}</span>
@@ -805,8 +810,8 @@ $(document).ready(function () {
         e.preventDefault();
         // Excel jadvalini yaratish
         var ws_data = [
-            ["Guruh:", result["21"].guruh_name], // Guruh nomi
-            ["Sana:", result["21"].date],        // Sana
+            ["Guruh:", 'salom'], // Guruh nomi
+            ["Sana:", 'hello'],        // Sana
             ["ID", "Ism Familiya", "1-para", "2-para", "3-para", "4-para"] // Ustunlar sarlavhasi
         ];
 
@@ -901,9 +906,9 @@ $(document).ready(function () {
                 $.each(dataTeacherActive, function (index, value) {
                     $('#teacherListActive').append(`
                             <li>
-                                <p>${index+1}</p>
+                                <p>${index + 1}</p>
                                 <p class="itemsChat">${value.ism} ${value.fam}</p>
-                                <p>${value.title_count*2}</p>
+                                <p>${value.title_count * 2}</p>
                             </li>
                     `)
                 });
@@ -911,8 +916,8 @@ $(document).ready(function () {
             }
         });
     }
-    fetchDataTeachersActive('2024-10-14')
-    
+    fetchDataTeachersActive($('#todayId').text())
+
 
 
     // Tugmalarni bosish funksiyalari
